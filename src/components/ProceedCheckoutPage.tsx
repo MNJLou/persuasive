@@ -37,7 +37,7 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
   });
 
   const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-  const taxRate = 0.15;
+  const taxRate = 0.1;
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
 
