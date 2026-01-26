@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { Toaster } from './ui/sonner';
+import { CartItem } from '../App';
 import {
   Select,
   SelectContent,
@@ -59,7 +60,7 @@ import WhiteBlue_IMG_9244 from '../Shirt_White_Blue_Embroidery/IMG_9244.jpg';
 import WhiteBlue_IMG_9249 from '../Shirt_White_Blue_Embroidery/IMG_9249.jpg';
 
 interface ProductCustomizerProps {
-  onAddToCart: () => void;
+  onAddToCart: (item: CartItem) => void;
 }
 
 const shirtColors = [
@@ -142,7 +143,15 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   };
 
   const handleAddToCart = () => {
-    onAddToCart();
+    const cartItem: CartItem = {
+      id: '',
+      shirtColor: selectedShirtColor.name,
+      embroideryColor: selectedEmbroideryColor.name,
+      size: selectedSize,
+      price: basePrice,
+      image: getCurrentImage(),
+    };
+    onAddToCart(cartItem);
     toast.success('Added to cart!', {
       description: `${selectedShirtColor.name} shirt with ${selectedEmbroideryColor.name} embroidery`,
     });
