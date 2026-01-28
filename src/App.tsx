@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ProductCustomizer } from './components/ProductCustomizer';
 import { HomePage } from './components/HomePage';
 import { CheckoutPage } from './components/CheckoutPage';
 import { ProceedCheckoutPage } from './components/ProceedCheckoutPage';
+import { PaymentSuccess } from './components/PaymentSuccess';
 import { ShoppingCart, ArrowLeft } from 'lucide-react';
 
 export interface CartItem {
@@ -16,7 +17,24 @@ export interface CartItem {
 
 export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'checkout' | 'proceed-checkout'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'checkout' | 'proceed-checkout' | 'checkout-success'>('home');
+
+  // Check for payment redirect on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paymentStatus = params.get('payment');
+    
+    if (paymentStatus === 'success') {
+      setCurrentPage('checkout-success');
+      setCartItems([]); // Clear cart after successful payment
+      // Clean up URL
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (paymentStatus === 'cancelled' || paymentStatus === 'failed') {
+      // Optionally handle cancelled/failed payments
+      // For now, just clean up the URL and stay on current page
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
 
   const handleAddToCart = (item: CartItem) => {
     setCartItems([...cartItems, { ...item, id: Date.now().toString() }]);
@@ -116,6 +134,10 @@ export default function App() {
       ) : currentPage === 'proceed-checkout' ? (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
           <ProceedCheckoutPage cartItems={cartItems} onBack={() => setCurrentPage('checkout')} />
+        </main>
+      ) : currentPage === 'checkout-success' ? (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <PaymentSuccess onBackToHome={handleBackToHome} onContinueShopping={handleShopNow} />
         </main>
       ) : (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">

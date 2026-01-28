@@ -10,9 +10,7 @@ interface CheckoutPageProps {
 
 export function CheckoutPage({ cartItems, onRemoveFromCart, onProceedCheckout }: CheckoutPageProps) {
   const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-  const taxRate = 0.15; // 15% tax
-  const tax = subtotal * taxRate;
-  const total = subtotal + tax;
+  const total = subtotal;
 
   if (cartItems.length === 0) {
     return (
@@ -101,10 +99,6 @@ export function CheckoutPage({ cartItems, onRemoveFromCart, onProceedCheckout }:
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
                 <span className="font-medium">R{subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Tax (15%)</span>
-                <span className="font-medium">R{tax.toFixed(2)}</span>
               </div>
             </div>
 

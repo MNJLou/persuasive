@@ -39,10 +39,67 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
 
   const [isProcessing, setIsProcessing] = useState(false);
 
+  const handlePay = async () => {
+  console.log("=== HANDLE PAY CLICKED ===");
+  
+  // Validate form first
+  if (!formData.firstName || !formData.surname || !formData.email || !formData.cellphone) {
+    toast.error('Please fill in all required billing details');
+    return;
+  }
+
+  if (!formData.streetAddress || !formData.suburb || !formData.city || !formData.postcode) {
+    toast.error('Please fill in all required delivery address fields');
+    return;
+  }
+
+  setIsProcessing(true);
+
+  try {
+    console.log("Calling API with amount:", Math.round(total * 100));
+    
+    const res = await fetch("/api/yoco/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: Math.round(total * 100), // Convert to cents
+      }),
+    });
+
+    console.log("Response status:", res.status);
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error("❌ API Error:", errorData);
+      toast.error(errorData.error || "Failed to create checkout");
+      setIsProcessing(false);
+      return;
+    }
+
+    const data = await res.json();
+    console.log("✅ Checkout response:", data);
+
+    // Verify we got a valid checkout response
+    if (!data.id || !data.redirectUrl) {
+      console.error("❌ INVALID CHECKOUT RESPONSE:", data);
+      toast.error("Invalid checkout session");
+      setIsProcessing(false);
+      return;
+    }
+
+    // Redirect to Yoco's hosted checkout page
+    console.log("🚀 Redirecting to:", data.redirectUrl);
+    window.location.href = data.redirectUrl;
+    
+  } catch (err) {
+    console.error("💥 Checkout error:", err);
+    toast.error("Could not start payment: " + (err instanceof Error ? err.message : 'Unknown error'));
+    setIsProcessing(false);
+  }
+};
+
   const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-  const taxRate = 0.15; // 15% tax
-  const tax = subtotal * taxRate;
-  const total = subtotal + tax;
+  const total = subtotal;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -105,10 +162,6 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
             <div className="flex justify-between text-sm">
               <span>Subtotal</span>
               <span>R{subtotal.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span>Tax (15%)</span>
-              <span>R{tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-semibold text-blue-600 mt-2">
               <span>Total</span>
@@ -275,10 +328,11 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
         {/* Full Width Submit Button */}
         <div className="lg:col-span-2 flex gap-4 pt-4">
           <Button
-            type="submit"
+            type="button"
             size="lg"
             className="flex-1"
             disabled={isProcessing}
+            onClick={handlePay}
           >
             {isProcessing ? 'Processing...' : `Complete Order (R${total.toFixed(2)})`}
           </Button>
