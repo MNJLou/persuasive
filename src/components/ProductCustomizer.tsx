@@ -108,7 +108,7 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   const [selectedSizeGuideImage, setSelectedSizeGuideImage] = useState(BlackPink_IMG_9123);
   const [sizeGuideToastId, setSizeGuideToastId] = useState<string | number | null>(null);
   const [selectedSize, setSelectedSize] = useState('Medium');
-  const basePrice = 550.00;
+  const basePrice = 20.00;
 
   const getAvailableEmbroideryColors = () => {
     return embroideryColorsByShirt[selectedShirtColor.name] || [];
