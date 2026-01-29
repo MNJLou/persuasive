@@ -21,20 +21,24 @@ export default function App() {
 
   // Check for payment redirect on mount
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const paymentStatus = params.get('payment');
-    
-    if (paymentStatus === 'success') {
-      setCurrentPage('checkout-success');
-      setCartItems([]); // Clear cart after successful payment
-      // Clean up URL
-      window.history.replaceState({}, '', window.location.pathname);
-    } else if (paymentStatus === 'cancelled' || paymentStatus === 'failed') {
-      // Optionally handle cancelled/failed payments
-      // For now, just clean up the URL and stay on current page
-      window.history.replaceState({}, '', window.location.pathname);
-    }
-  }, []);
+  const params = new URLSearchParams(window.location.search);
+  const paymentStatus = params.get('payment');
+  
+  console.log("🔍 App.tsx - Payment status:", paymentStatus);
+  console.log("🔍 App.tsx - Full URL:", window.location.href);
+  
+  if (paymentStatus === 'success') {
+    console.log("✅ Payment success detected in App.tsx");
+    setCurrentPage('checkout-success');
+    setCartItems([]); // Clear cart after successful payment
+    // Don't clean up URL here - let PaymentSuccess component do it
+  } else if (paymentStatus === 'cancelled' || paymentStatus === 'failed') {
+    console.log("❌ Payment cancelled/failed");
+    // Optionally handle cancelled/failed payments
+    // Clean up URL
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+}, []);
 
   const handleAddToCart = (item: CartItem) => {
     setCartItems([...cartItems, { ...item, id: Date.now().toString() }]);

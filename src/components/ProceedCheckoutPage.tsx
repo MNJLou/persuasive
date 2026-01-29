@@ -58,6 +58,16 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
   try {
     console.log("Calling API with amount:", Math.round(total * 100));
     
+    // Store order data in localStorage for the success page
+    const orderData = {
+      cartItems,
+      formData,
+      total,
+      subtotal,
+      timestamp: new Date().toISOString(),
+    };
+    localStorage.setItem('pendingOrder', JSON.stringify(orderData));
+    
     const res = await fetch("/api/yoco/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -73,6 +83,7 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
       console.error("❌ API Error:", errorData);
       toast.error(errorData.error || "Failed to create checkout");
       setIsProcessing(false);
+      localStorage.removeItem('pendingOrder');
       return;
     }
 
@@ -84,6 +95,7 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
       console.error("❌ INVALID CHECKOUT RESPONSE:", data);
       toast.error("Invalid checkout session");
       setIsProcessing(false);
+      localStorage.removeItem('pendingOrder');
       return;
     }
 
@@ -95,6 +107,7 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
     console.error("💥 Checkout error:", err);
     toast.error("Could not start payment: " + (err instanceof Error ? err.message : 'Unknown error'));
     setIsProcessing(false);
+    localStorage.removeItem('pendingOrder');
   }
 };
 
@@ -173,6 +186,13 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Shipping Note */}
+        <div className="lg:col-span-2 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-900">
+            <strong>Note:</strong> The displayed price does not include shipping costs. Shipping fees will be calculated after your order is confirmed, and payment details will be emailed to you.
+          </p>
+        </div>
+
         {/* Billing Details Section */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Billing Details</h2>
@@ -308,19 +328,6 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
                 placeholder="2000"
                 required
               />
-            </div>
-          </div>
-        </div>
-
-        {/* Payment Section */}
-        <div className="lg:col-span-2">
-          <div className="border border-gray-300 rounded-lg p-6 bg-white">
-            <h2 className="text-2xl font-bold mb-6">Payment Details</h2>
-            
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-              <p className="text-yellow-800 text-sm">
-                Payment gateway is not yet configured. Please set up your preferred payment provider.
-              </p>
             </div>
           </div>
         </div>

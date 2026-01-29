@@ -1,6 +1,30 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
+import { toast } from 'sonner';
+
+interface OrderData {
+  cartItems: Array<{
+    shirtColor: string;
+    embroideryColor: string;
+    size: string;
+    price: number;
+  }>;
+  formData: {
+    firstName: string;
+    surname: string;
+    email: string;
+    cellphone: string;
+    country: string;
+    streetAddress: string;
+    apartment: string;
+    suburb: string;
+    city: string;
+    postcode: string;
+  };
+  total: number;
+  subtotal: number;
+}
 
 interface PaymentSuccessProps {
   onBackToHome: () => void;
@@ -11,19 +35,91 @@ export function PaymentSuccess({ onBackToHome, onContinueShopping }: PaymentSucc
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading');
 
   useEffect(() => {
-    // Get the payment status from URL params
-    const params = new URLSearchParams(window.location.search);
-    const paymentStatus = params.get('status');
+  const sendOrderEmail = async () => {
+    console.log("🔍 PaymentSuccess useEffect triggered");
+    
+    try {
+      // Get the payment status from URL params
+      const params = new URLSearchParams(window.location.search);
+      const paymentStatus = params.get('payment');
+      
+      console.log("🔍 Payment status from URL:", paymentStatus);
+      console.log("🔍 Full URL:", window.location.href);
 
-    if (paymentStatus === 'success') {
-      setStatus('success');
-    } else if (paymentStatus === 'cancelled' || paymentStatus === 'failed') {
-      setStatus('failed');
-    } else {
-      // Default to success if no status (Yoco redirects without params by default)
+      if (paymentStatus === 'success') {
+        console.log("✅ Payment status is success");
+        setStatus('success');
+        
+        // Get order data from localStorage
+        const orderDataJson = localStorage.getItem('pendingOrder');
+        console.log("🔍 Order data from localStorage:", orderDataJson ? "Found" : "Not found");
+        
+        if (orderDataJson) {
+          const orderData: OrderData = JSON.parse(orderDataJson);
+          console.log("📦 Order data:", orderData);
+
+          console.log("📧 About to send email to /api/send-email");
+          
+          // Send confirmation email
+          const emailRes = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: orderData.formData.email,
+              firstName: orderData.formData.firstName,
+              surname: orderData.formData.surname,
+              cellphone: orderData.formData.cellphone,
+              streetAddress: orderData.formData.streetAddress,
+              apartment: orderData.formData.apartment,
+              suburb: orderData.formData.suburb,
+              city: orderData.formData.city,
+              postcode: orderData.formData.postcode,
+              country: orderData.formData.country,
+              cartItems: orderData.cartItems,
+              total: orderData.total,
+              subtotal: orderData.subtotal,
+            }),
+          });
+
+          console.log("📧 Email API response status:", emailRes.status);
+          const emailResponseData = await emailRes.json();
+          console.log("📧 Email API response data:", emailResponseData);
+
+          if (emailRes.ok) {
+            console.log('✅ Order confirmation email sent');
+            toast.success('Order confirmation email sent!');
+          } else {
+            console.error('❌ Failed to send email:', emailResponseData);
+            toast.error('Order successful, but email notification failed');
+          }
+
+          // Clear the stored order data
+          localStorage.removeItem('pendingOrder');
+          console.log("🗑️ Cleared pendingOrder from localStorage");
+        } else {
+          console.warn("⚠️ No order data found in localStorage");
+        }
+        
+        // NOW clean up the URL after processing
+        window.history.replaceState({}, '', window.location.pathname);
+        console.log("🧹 Cleaned up URL");
+        
+      } else if (paymentStatus === 'cancelled' || paymentStatus === 'failed') {
+        console.log("❌ Payment was cancelled or failed");
+        setStatus('failed');
+        window.history.replaceState({}, '', window.location.pathname);
+      } else {
+        console.log("⚠️ No payment status in URL, defaulting to success");
+        setStatus('success');
+      }
+    } catch (error) {
+      console.error('💥 Error processing payment success:', error);
       setStatus('success');
     }
-  }, []);
+  };
+
+  sendOrderEmail();
+}, []);
 
   if (status === 'loading') {
     return (
@@ -59,12 +155,14 @@ export function PaymentSuccess({ onBackToHome, onContinueShopping }: PaymentSucc
       <p className="text-sm text-gray-500 mb-8">
         Your order is being processed and will be shipped soon.
       </p>
-      <Button onClick={onBackToHome} size="lg">
-        Return to Home
-      </Button>
-      <Button onClick={onContinueShopping} size="lg" className="mt-4">
-        Continue Shopping
-      </Button>
+      <div className="flex gap-4">
+        <Button onClick={onBackToHome} size="lg" variant="outline">
+          Return to Home
+        </Button>
+        <Button onClick={onContinueShopping} size="lg">
+          Continue Shopping
+        </Button>
+      </div>
     </div>
   );
 }

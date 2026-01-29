@@ -59,6 +59,63 @@ import WhiteBlue_IMG_9241 from '../Shirt_White_Blue_Embroidery/IMG_9241.jpg';
 import WhiteBlue_IMG_9244 from '../Shirt_White_Blue_Embroidery/IMG_9244.jpg';
 import WhiteBlue_IMG_9249 from '../Shirt_White_Blue_Embroidery/IMG_9249.jpg';
 
+// Import Grey + Yellow Embroidery
+import GreyYellow_IMG_9812 from '../Grey Shirt Yellow Embroidery/IMG_9812.jpg';
+import GreyYellow_IMG_9813 from '../Grey Shirt Yellow Embroidery/IMG_9813.jpg';
+import GreyYellow_IMG_9814 from '../Grey Shirt Yellow Embroidery/IMG_9814.jpg';
+import GreyYellow_IMG_9815 from '../Grey Shirt Yellow Embroidery/IMG_9815.jpg';
+import GreyYellow_IMG_9816 from '../Grey Shirt Yellow Embroidery/IMG_9816.jpg';
+import GreyYellow_IMG_9817 from '../Grey Shirt Yellow Embroidery/IMG_9817.jpg';
+import GreyYellow_IMG_9818 from '../Grey Shirt Yellow Embroidery/IMG_9818.jpg';
+import GreyYellow_IMG_9820 from '../Grey Shirt Yellow Embroidery/IMG_9820.jpg';
+import GreyYellow_IMG_9821 from '../Grey Shirt Yellow Embroidery/IMG_9821.jpg';
+import GreyYellow_IMG_9823 from '../Grey Shirt Yellow Embroidery/IMG_9823.jpg';
+import GreyYellow_IMG_9900 from '../Grey Shirt Yellow Embroidery/IMG_9900.jpg';
+import GreyYellow_IMG_9903 from '../Grey Shirt Yellow Embroidery/IMG_9903.jpg';
+import GreyYellow_IMG_9905 from '../Grey Shirt Yellow Embroidery/IMG_9905.jpg';
+import GreyYellow_IMG_9911 from '../Grey Shirt Yellow Embroidery/IMG_9911.jpg';
+import GreyYellow_IMG_9913 from '../Grey Shirt Yellow Embroidery/IMG_9913.jpg';
+import GreyYellow_IMG_9915 from '../Grey Shirt Yellow Embroidery/IMG_9915.jpg';
+import GreyYellow_IMG_9916 from '../Grey Shirt Yellow Embroidery/IMG_9916.jpg';
+import GreyYellow_IMG_9918 from '../Grey Shirt Yellow Embroidery/IMG_9918.jpg';
+import GreyYellow_IMG_9919 from '../Grey Shirt Yellow Embroidery/IMG_9919.jpg';
+
+// Import Mint Green + Teal Embroidery
+import MintGreenTeal_IMG_9789 from '../Mint Green Shirt Teal Embroidery/IMG_9789.jpg';
+import MintGreenTeal_IMG_9791 from '../Mint Green Shirt Teal Embroidery/IMG_9791.jpg';
+import MintGreenTeal_IMG_9792 from '../Mint Green Shirt Teal Embroidery/IMG_9792.jpg';
+import MintGreenTeal_IMG_9793 from '../Mint Green Shirt Teal Embroidery/IMG_9793.jpg';
+import MintGreenTeal_IMG_9797 from '../Mint Green Shirt Teal Embroidery/IMG_9797.jpg';
+import MintGreenTeal_IMG_9798 from '../Mint Green Shirt Teal Embroidery/IMG_9798.jpg';
+import MintGreenTeal_IMG_9800 from '../Mint Green Shirt Teal Embroidery/IMG_9800.jpg';
+import MintGreenTeal_IMG_9804 from '../Mint Green Shirt Teal Embroidery/IMG_9804.jpg';
+import MintGreenTeal_IMG_9805 from '../Mint Green Shirt Teal Embroidery/IMG_9805.jpg';
+import MintGreenTeal_IMG_9866 from '../Mint Green Shirt Teal Embroidery/IMG_9866.jpg';
+import MintGreenTeal_IMG_9867 from '../Mint Green Shirt Teal Embroidery/IMG_9867.jpg';
+import MintGreenTeal_IMG_9870 from '../Mint Green Shirt Teal Embroidery/IMG_9870.jpg';
+import MintGreenTeal_IMG_9872 from '../Mint Green Shirt Teal Embroidery/IMG_9872.jpg';
+import MintGreenTeal_IMG_9873 from '../Mint Green Shirt Teal Embroidery/IMG_9873.jpg';
+import MintGreenTeal_IMG_9874 from '../Mint Green Shirt Teal Embroidery/IMG_9874.jpg';
+import MintGreenTeal_IMG_9875 from '../Mint Green Shirt Teal Embroidery/IMG_9875.jpg';
+import MintGreenTeal_IMG_9876 from '../Mint Green Shirt Teal Embroidery/IMG_9876.jpg';
+import MintGreenTeal_IMG_9877 from '../Mint Green Shirt Teal Embroidery/IMG_9877.jpg';
+
+// Import Pale Blue + Orange Embroidery
+import PaleBlueOrange_IMG_9765 from '../Pale Blue Shirt Orange Embroidery/IMG_9765.jpg';
+import PaleBlueOrange_IMG_9768 from '../Pale Blue Shirt Orange Embroidery/IMG_9768.jpg';
+import PaleBlueOrange_IMG_9772 from '../Pale Blue Shirt Orange Embroidery/IMG_9772.jpg';
+import PaleBlueOrange_IMG_9773 from '../Pale Blue Shirt Orange Embroidery/IMG_9773.jpg';
+import PaleBlueOrange_IMG_9778 from '../Pale Blue Shirt Orange Embroidery/IMG_9778.jpg';
+import PaleBlueOrange_IMG_9782 from '../Pale Blue Shirt Orange Embroidery/IMG_9782.jpg';
+import PaleBlueOrange_IMG_9827 from '../Pale Blue Shirt Orange Embroidery/IMG_9827.jpg';
+import PaleBlueOrange_IMG_9829 from '../Pale Blue Shirt Orange Embroidery/IMG_9829.jpg';
+import PaleBlueOrange_IMG_9830 from '../Pale Blue Shirt Orange Embroidery/IMG_9830.jpg';
+import PaleBlueOrange_IMG_9835 from '../Pale Blue Shirt Orange Embroidery/IMG_9835.jpg';
+import PaleBlueOrange_IMG_9841 from '../Pale Blue Shirt Orange Embroidery/IMG_9841.jpg';
+import PaleBlueOrange_IMG_9844 from '../Pale Blue Shirt Orange Embroidery/IMG_9844.jpg';
+
+import SizeGuide from '../Hero_Images/SizeGuide.jpg';
+
 interface ProductCustomizerProps {
   onAddToCart: (item: CartItem) => void;
 }
@@ -67,6 +124,9 @@ const shirtColors = [
   { name: 'White', value: '#FFFFFF', border: true },
   { name: 'Black', value: '#000000' },
   { name: 'Cream', value: '#F5E6D3' },
+  { name: 'Grey', value: '#9CA3AF' },
+  { name: 'Mint Green', value: '#A7F3D0' },
+  { name: 'Pale Blue', value: '#BAE6FD' },
 ];
 
 const embroideryColorsByShirt: { [key: string]: typeof embroideryColors } = {
@@ -79,6 +139,15 @@ const embroideryColorsByShirt: { [key: string]: typeof embroideryColors } = {
   ],
   'Cream': [
     { name: 'Red', value: '#DC2626' },
+  ],
+  'Grey': [
+    { name: 'Yellow', value: '#EAB308' },
+  ],
+  'Mint Green': [
+    { name: 'Teal', value: '#14B8A6' },
+  ],
+  'Pale Blue': [
+    { name: 'Orange', value: '#FB923C' },
   ],
 };
 
@@ -97,6 +166,9 @@ const shirtImagesByVariant: { [key: string]: string[] } = {
   'Black-Pink': [BlackPink_IMG_9123, BlackPink_IMG_9125, BlackPink_IMG_9128, BlackPink_IMG_9133, BlackPink_IMG_9217, BlackPink_IMG_9221, BlackPink_IMG_9222, BlackPink_IMG_9224, BlackPink_IMG_9228, BlackPink_IMG_9233],
   'Black-Red': [BlackRed_IMG_9196, BlackRed_IMG_9198, BlackRed_IMG_9207, BlackRed_IMG_9209, BlackRed_IMG_9211, BlackRed_IMG_9212, BlackRed_IMG_9288, BlackRed_IMG_9292, BlackRed_IMG_9293, BlackRed_IMG_9295, BlackRed_IMG_9297, BlackRed_IMG_9300, BlackRed_IMG_9301],
   'Cream-Red': [CreamRed_IMG_9150, CreamRed_IMG_9153, CreamRed_IMG_9159, CreamRed_IMG_9266, CreamRed_IMG_9269, CreamRed_IMG_9280, CreamRed_IMG_9282],
+  'Grey-Yellow': [GreyYellow_IMG_9812, GreyYellow_IMG_9813, GreyYellow_IMG_9814, GreyYellow_IMG_9815, GreyYellow_IMG_9816, GreyYellow_IMG_9817, GreyYellow_IMG_9818, GreyYellow_IMG_9820, GreyYellow_IMG_9821, GreyYellow_IMG_9823, GreyYellow_IMG_9900, GreyYellow_IMG_9903, GreyYellow_IMG_9905, GreyYellow_IMG_9911, GreyYellow_IMG_9913, GreyYellow_IMG_9915, GreyYellow_IMG_9916, GreyYellow_IMG_9918, GreyYellow_IMG_9919],
+  'Mint Green-Teal': [MintGreenTeal_IMG_9789, MintGreenTeal_IMG_9791, MintGreenTeal_IMG_9792, MintGreenTeal_IMG_9793, MintGreenTeal_IMG_9797, MintGreenTeal_IMG_9798, MintGreenTeal_IMG_9800, MintGreenTeal_IMG_9804, MintGreenTeal_IMG_9805, MintGreenTeal_IMG_9866, MintGreenTeal_IMG_9867, MintGreenTeal_IMG_9870, MintGreenTeal_IMG_9872, MintGreenTeal_IMG_9873, MintGreenTeal_IMG_9874, MintGreenTeal_IMG_9875, MintGreenTeal_IMG_9876, MintGreenTeal_IMG_9877],
+  'Pale Blue-Orange': [PaleBlueOrange_IMG_9765, PaleBlueOrange_IMG_9768, PaleBlueOrange_IMG_9772, PaleBlueOrange_IMG_9773, PaleBlueOrange_IMG_9778, PaleBlueOrange_IMG_9782, PaleBlueOrange_IMG_9827, PaleBlueOrange_IMG_9829, PaleBlueOrange_IMG_9830, PaleBlueOrange_IMG_9835, PaleBlueOrange_IMG_9841, PaleBlueOrange_IMG_9844],
 };
 
 export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
@@ -105,7 +177,6 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
     embroideryColorsByShirt['White'][0]
   );
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [selectedSizeGuideImage, setSelectedSizeGuideImage] = useState(BlackPink_IMG_9123);
   const [sizeGuideToastId, setSizeGuideToastId] = useState<string | number | null>(null);
   const [selectedSize, setSelectedSize] = useState('Medium');
   const basePrice = 20.00;
@@ -142,6 +213,30 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
     setSelectedImageIndex(0);
   };
 
+  const SizeGuideToast = ({ toastId }: { toastId: string | number }) => (
+    <div className="bg-white rounded-lg shadow-lg max-w-md mr-2 relative">
+      <button
+        onClick={() => toast.dismiss(toastId)}
+        className="absolute top-2 bg-white -right-1 mr-2 p-1 rounded-full shadow-md"
+        aria-label="Close"
+      >
+        <X className="w-8 h-8" />
+      </button>
+      <img
+        src={SizeGuide}
+        alt="Size Guide"
+        className="w-full h-auto rounded-lg"
+      />
+    </div>
+  );
+
+  const handleSizeGuide = () => {
+    const toastId = toast.custom((t) => <SizeGuideToast toastId={t} />, {
+      duration: Infinity,
+    });
+    setSizeGuideToastId(toastId);
+  };
+
   const handleAddToCart = () => {
     const cartItem: CartItem = {
       id: '',
@@ -157,65 +252,7 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
     });
   };
 
-  const SizeGuideToast = ({ toastId }: { toastId: string | number }) => (
-    <div className="bg-white rounded-lg shadow-lg max-w-md mr-2 relative">
-      <button
-        onClick={() => toast.dismiss(toastId)}
-        className="absolute top-2 bg-white -right-1 mr-2 p-1 rounded-full shadow-md"
-        aria-label="Close"
-      >
-        <X className="w-8 h-8" />
-      </button>
-      <img
-        src={selectedSizeGuideImage}
-        alt="Size Guide"
-        className="w-full h-auto rounded-lg"
-      />
-      <Button variant="secondary"
-              className="mt-4 p-2 gap-2"
-              onClick={() => setSelectedSizeGuideImage(BlackPink_IMG_9123)}>
-        Small
-      </Button>
-      <Button variant="secondary"
-              className="mt-4 p-2 gap-2"
-              onClick={() => setSelectedSizeGuideImage(BlackPink_IMG_9125)}>
-        Medium
-      </Button>
-      <Button variant="secondary"
-              className="mt-4 p-2 gap-2"
-              onClick={() => setSelectedSizeGuideImage(BlackPink_IMG_9128)}>
-        Large
-      </Button>
-    </div>
-  );
 
-  const handleSizeGuide = () => {
-    const toastId = toast.custom((t) => <SizeGuideToast toastId={t} />, {
-      duration: Infinity,
-    });
-    setSizeGuideToastId(toastId);
-  };
-
-  // Update the toast when the size guide image changes
-  useEffect(() => {
-    if (sizeGuideToastId !== null) {
-      toast.dismiss(sizeGuideToastId);
-      const toastId = toast.custom((t) => <SizeGuideToast toastId={t} />, {
-        duration: Infinity,
-      });
-      setSizeGuideToastId(toastId);
-    }
-  }, [selectedSizeGuideImage]);
-
-  // Auto-cycle images every 3 seconds for the current variant
-  useEffect(() => {
-    const images = getCurrentImages();
-    if (!images || images.length <= 1) return;
-    const id = setInterval(() => {
-      setSelectedImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    }, 3000);
-    return () => clearInterval(id);
-  }, [selectedShirtColor.name, selectedEmbroideryColor.name]);
 
   return (
     <>
@@ -258,7 +295,8 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
         <div className="order-2 flex flex-col">
           <div className="flex-1">
             <h2 className="text-3xl lg:text-4xl mb-2">Premium Cotton Tee</h2>
-            <p className="text-2xl text-blue-600 mb-6">R{basePrice.toFixed(2)}</p>
+            <p className="text-2xl text-blue-600 mb-2">R{basePrice.toFixed(2)}</p>
+            <b className="text text-green-600 font-semibold mb-6 "> Buy 2 shirts & get FREE shipping!</b>
             
             <p className="text-gray-600 mb-8">
               Crafted from 100% organic cotton, this premium t-shirt offers unparalleled comfort and durability. 
@@ -359,8 +397,6 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
                 Size Guide
               </Button>
             </div>
-
-            {/* Product Features */}
             <div className="mb-8 p-4 bg-gray-100 rounded-lg">
               <h3 className="mb-3">Product Features</h3>
               <ul className="space-y-2 text-gray-700">
