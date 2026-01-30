@@ -43,6 +43,7 @@ export function HomePage({ onShopNow }: HomePageProps) {
   }, []);
   return (
     <div className="min-h-screen">
+
       {/* Hero Section with Image Background */}
       <section className="relative h-screen flex items-center justify-center overflow-y-hidden">
         {/* Image Background */}
@@ -69,6 +70,9 @@ export function HomePage({ onShopNow }: HomePageProps) {
           >
             Shop Now <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
+          <p className="text-2xl md:text-xl py-4 mb-8 text-gray-200">
+            <b>Buy 2 and get free shipping</b>
+          </p>
         </div>
 
         {/* Scroll Indicator */}

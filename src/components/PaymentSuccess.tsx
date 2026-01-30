@@ -86,9 +86,23 @@ export function PaymentSuccess({ onBackToHome, onContinueShopping }: PaymentSucc
           console.log("📧 Email API response data:", emailResponseData);
 
           if (emailRes.ok) {
-            console.log('✅ Order confirmation email sent');
-            toast.success('Order confirmation email sent!');
-          } else {
+  console.log('✅ Order confirmation email sent');
+  toast.success('Order confirmation email sent!');
+  
+  // Reduce stock for purchased items
+  for (const item of orderData.cartItems) {
+    const colorCombo = `${item.shirtColor}-${item.embroideryColor}`;
+    await fetch('/api/admin/stock', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        color: colorCombo,
+        size: item.size,
+        quantity: 1,
+      }),
+    });
+  }
+} else {
             console.error('❌ Failed to send email:', emailResponseData);
             toast.error('Order successful, but email notification failed');
           }

@@ -171,6 +171,45 @@ const shirtImagesByVariant: { [key: string]: string[] } = {
   'Pale Blue-Orange': [PaleBlueOrange_IMG_9765, PaleBlueOrange_IMG_9768, PaleBlueOrange_IMG_9772, PaleBlueOrange_IMG_9773, PaleBlueOrange_IMG_9778, PaleBlueOrange_IMG_9782, PaleBlueOrange_IMG_9827, PaleBlueOrange_IMG_9829, PaleBlueOrange_IMG_9830, PaleBlueOrange_IMG_9835, PaleBlueOrange_IMG_9841, PaleBlueOrange_IMG_9844],
 };
 
+// Stock count: shirt-embroidery-size combination
+const stockCounts: { [key: string]: number } = {
+  'White-Blue-Small': 5,
+  'White-Blue-Medium': 8,
+  'White-Blue-Large': 6,
+  'White-Blue-XL': 3,
+  'White-Blue-XXL': 0,
+  'Black-Pink-Small': 4,
+  'Black-Pink-Medium': 7,
+  'Black-Pink-Large': 5,
+  'Black-Pink-XL': 2,
+  'Black-Pink-XXL': 1,
+  'Black-Red-Small': 6,
+  'Black-Red-Medium': 9,
+  'Black-Red-Large': 4,
+  'Black-Red-XL': 0,
+  'Black-Red-XXL': 2,
+  'Cream-Red-Small': 3,
+  'Cream-Red-Medium': 5,
+  'Cream-Red-Large': 7,
+  'Cream-Red-XL': 4,
+  'Cream-Red-XXL': 0,
+  'Grey-Yellow-Small': 8,
+  'Grey-Yellow-Medium': 10,
+  'Grey-Yellow-Large': 6,
+  'Grey-Yellow-XL': 3,
+  'Grey-Yellow-XXL': 1,
+  'Mint Green-Teal-Small': 5,
+  'Mint Green-Teal-Medium': 6,
+  'Mint Green-Teal-Large': 4,
+  'Mint Green-Teal-XL': 2,
+  'Mint Green-Teal-XXL': 0,
+  'Pale Blue-Orange-Small': 7,
+  'Pale Blue-Orange-Medium': 8,
+  'Pale Blue-Orange-Large': 5,
+  'Pale Blue-Orange-XL': 1,
+  'Pale Blue-Orange-XXL': 3,
+};
+
 export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   const [selectedShirtColor, setSelectedShirtColor] = useState(shirtColors[0]);
   const [selectedEmbroideryColor, setSelectedEmbroideryColor] = useState(
@@ -179,11 +218,47 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [sizeGuideToastId, setSizeGuideToastId] = useState<string | number | null>(null);
   const [selectedSize, setSelectedSize] = useState('Medium');
+  const [stockData, setStockData] = useState<{ color: string; size: string; stock: number }[]>([]);
   const basePrice = 550.00;
 
-  const getAvailableEmbroideryColors = () => {
-    return embroideryColorsByShirt[selectedShirtColor.name] || [];
+  
+  // Load stock data on mount
+  useEffect(() => {
+    loadStock();
+  }, []);
+
+  const loadStock = async () => {
+    try {
+      const res = await fetch('/api/admin/stock');
+      if (res.ok) {
+        const data = await res.json();
+        setStockData(data.stock || []);
+      }
+    } catch (error) {
+      console.error('Failed to load stock:', error);
+      // Fallback to showing all items as available if API fails
+    }
   };
+
+  const getStockKey = (size: string) => {
+    return `${selectedShirtColor.name}-${selectedEmbroideryColor.name}-${size}`;
+  };
+
+  const getStock = (size: string) => {
+    // Find stock for this specific combination
+    const stockItem = stockData.find(
+      item => 
+        item.color === `${selectedShirtColor.name}-${selectedEmbroideryColor.name}` && 
+        item.size === size
+    );
+    return stockItem?.stock ?? 999; // Return 999 if not found (unlimited stock)
+  };
+
+  const isOutOfStock = (size: string) => {
+    const stock = getStock(size);
+    return stock === 0;
+  };
+
 
   const getVariantKey = () => {
     return `${selectedShirtColor.name}-${selectedEmbroideryColor.name}`;
@@ -197,6 +272,11 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
     const images = getCurrentImages();
     return images[selectedImageIndex] || images[0];
   };
+
+  const getAvailableEmbroideryColors = () => {
+    return embroideryColorsByShirt[selectedShirtColor.name] || [];
+  };
+
 
   const handleShirtColorChange = (color: typeof shirtColors[0]) => {
     setSelectedShirtColor(color);
@@ -216,8 +296,11 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   const SizeGuideToast = ({ toastId }: { toastId: string | number }) => (
     <div className="bg-white rounded-lg shadow-lg max-w-md mr-2 relative">
       <button
-        onClick={() => toast.dismiss(toastId)}
-        className="absolute top-2 bg-white -right-1 mr-2 p-1 rounded-full shadow-md"
+        onClick={() => {
+          toast.dismiss(toastId);
+          setSizeGuideToastId(null);
+        }}
+        className="absolute top-2 bg-white -right-1 mr-2 p-1 rounded-full shadow-md z-10"
         aria-label="Close"
       >
         <X className="w-8 h-8" />
@@ -231,6 +314,11 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   );
 
   const handleSizeGuide = () => {
+    // Dismiss any existing size guide toast first
+    if (sizeGuideToastId !== null) {
+      toast.dismiss(sizeGuideToastId);
+    }
+    
     const toastId = toast.custom((t) => <SizeGuideToast toastId={t} />, {
       duration: Infinity,
     });
@@ -380,11 +468,20 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
                     <SelectValue placeholder="Select a size" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Small">Small</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="Large">Large</SelectItem>
-                    <SelectItem value="XL">XL</SelectItem>
-                    <SelectItem value="XXL">XXL</SelectItem>
+                    {['Small', 'Medium', 'Large', 'XL', 'XXL'].map((size) => {
+                      const stock = getStock(size);
+                      const outOfStock = isOutOfStock(size);
+                      return (
+                        <SelectItem key={size} value={size} disabled={outOfStock}>
+                          <span className={outOfStock ? 'line-through' : ''}>
+                            {size}
+                          </span>
+                          <span className="ml-2 text-gray-600">
+                            ({stock} in stock)
+                          </span>
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
               </div>
@@ -414,8 +511,9 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
             onClick={handleAddToCart}
             size="lg"
             className="w-full"
+            disabled={isOutOfStock(selectedSize)}
           >
-            Add to Cart - R{basePrice.toFixed(2)}
+            {isOutOfStock(selectedSize) ? 'Out of Stock' : `Add to Cart - R${basePrice.toFixed(2)}`}
           </Button>
         </div>
       </div>

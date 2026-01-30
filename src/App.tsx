@@ -5,6 +5,7 @@ import { CheckoutPage } from './components/CheckoutPage';
 import { ProceedCheckoutPage } from './components/ProceedCheckoutPage';
 import { PaymentSuccess } from './components/PaymentSuccess';
 import { ShoppingCart, ArrowLeft } from 'lucide-react';
+import { AdminPanel } from './components/AdminPanel';
 
 export interface CartItem {
   id: string;
@@ -17,7 +18,19 @@ export interface CartItem {
 
 export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'checkout' | 'proceed-checkout' | 'checkout-success'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'shop' | 'checkout' | 'proceed-checkout' | 'checkout-success' | 'admin'>(() => {
+  // Check URL path for admin
+  if (window.location.pathname === '/admin') {
+    return 'admin';
+  }
+  
+  // Check if we're returning from Yoco with success
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    return 'checkout-success';
+  }
+  return 'home';
+});
 
   // Check for payment redirect on mount
   useEffect(() => {
@@ -38,6 +51,17 @@ export default function App() {
     // Clean up URL
     window.history.replaceState({}, '', window.location.pathname);
   }
+}, []);
+
+useEffect(() => {
+  const handlePopState = () => {
+    if (window.location.pathname === '/admin') {
+      setCurrentPage('admin');
+    }
+  };
+
+  window.addEventListener('popstate', handlePopState);
+  return () => window.removeEventListener('popstate', handlePopState);
 }, []);
 
   const handleAddToCart = (item: CartItem) => {
@@ -129,7 +153,9 @@ export default function App() {
       )}
 
       {/* Main Content */}
-      {currentPage === 'home' ? (
+      {currentPage === 'admin' ? (
+        <AdminPanel onBack={handleBackToHome} />
+      ) : currentPage === 'home' ? (
         <HomePage onShopNow={handleShopNow} />
       ) : currentPage === 'checkout' ? (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
