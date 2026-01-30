@@ -190,7 +190,7 @@ export default async function handler(req, res) {
             </div>
 
             <div class="footer">
-              <p>If you have any questions, please contact us at alessandrodestefano22@gmail.com</p>
+              <p>If you have any questions, please contact us at alessandro.persuasive@gmail.com</p>
               <p>© 2026 Persuasive. All rights reserved.</p>
             </div>
           </div>
@@ -383,7 +383,7 @@ export default async function handler(req, res) {
 
     const ownerEmailResponse = await resend.emails.send({
       from: 'Persuasive Orders <alessandro@contact.persuasive.online>',
-      to: 'alessandrodestefano22@gmail.com', // Replace with actual email
+      to: 'alessandro.persuasive@gmail.com', // Replace with actual email
       subject: `🛍️ New Order from ${firstName} ${surname} - R${total.toFixed(2)}`,
       html: ownerEmailHtml,
     });
