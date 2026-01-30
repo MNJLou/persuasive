@@ -190,7 +190,7 @@ export default async function handler(req, res) {
             </div>
 
             <div class="footer">
-              <p>If you have any questions, please contact us at alessandrodestefano22@gmail.com</p>
+              <p>If you have any questions, please contact us at alessandro.persuasive@gmail.com</p>
               <p>© 2026 Persuasive. All rights reserved.</p>
             </div>
           </div>
