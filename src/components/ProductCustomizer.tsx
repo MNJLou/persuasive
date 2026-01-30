@@ -216,7 +216,7 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
     embroideryColorsByShirt['White'][0]
   );
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [sizeGuideToastId, setSizeGuideToastId] = useState<string | number | null>(null);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [selectedSize, setSelectedSize] = useState('Medium');
   const [stockData, setStockData] = useState<{ color: string; size: string; stock: number }[]>([]);
   const basePrice = 550.00;
@@ -293,36 +293,8 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
     setSelectedImageIndex(0);
   };
 
-  const SizeGuideToast = ({ toastId }: { toastId: string | number }) => (
-    <div className="bg-white rounded-lg shadow-lg max-w-md mr-2 relative">
-      <button
-        onClick={() => {
-          toast.dismiss(toastId);
-          setSizeGuideToastId(null);
-        }}
-        className="absolute top-2 bg-white -right-1 mr-2 p-1 rounded-full shadow-md z-10"
-        aria-label="Close"
-      >
-        <X className="w-8 h-8" />
-      </button>
-      <img
-        src={SizeGuide}
-        alt="Size Guide"
-        className="w-full h-auto rounded-lg"
-      />
-    </div>
-  );
-
   const handleSizeGuide = () => {
-    // Dismiss any existing size guide toast first
-    if (sizeGuideToastId !== null) {
-      toast.dismiss(sizeGuideToastId);
-    }
-    
-    const toastId = toast.custom((t) => <SizeGuideToast toastId={t} />, {
-      duration: Infinity,
-    });
-    setSizeGuideToastId(toastId);
+    setShowSizeGuide(!showSizeGuide);
   };
 
   const handleAddToCart = () => {
@@ -345,6 +317,9 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   return (
     <>
       <Toaster />
+      
+      {/* Size Guide Modal */}
+      
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Product Image */}
         <div className="order-1">
@@ -493,6 +468,17 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
               >
                 Size Guide
               </Button>
+              {showSizeGuide && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full relative">
+            <img
+              src={SizeGuide}
+              alt="Size Guide"
+              className="w-full h-auto rounded-lg"
+            />
+          </div>
+        </div>
+      )}
             </div>
             <div className="mb-8 p-4 bg-gray-100 rounded-lg">
               <h3 className="mb-3">Product Features</h3>
