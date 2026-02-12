@@ -2,33 +2,28 @@ import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useMemo } from 'react';
 
-// Import all hero images
-import IMG_9319 from '../Hero_Images/IMG_9319.jpg';
-import IMG_9322 from '../Hero_Images/IMG_9322.jpg';
-import IMG_9328 from '../Hero_Images/IMG_9328.jpg';
-import IMG_9332 from '../Hero_Images/IMG_9332.jpg';
-import IMG_9334 from '../Hero_Images/IMG_9334.jpg';
-import IMG_9338 from '../Hero_Images/IMG_9338.jpg';
-import IMG_9350 from '../Hero_Images/IMG_9350.jpg';
-import IMG_9353 from '../Hero_Images/IMG_9353.jpg';
-import IMG_9359 from '../Hero_Images/IMG_9359.jpg';
-import IMG_9362 from '../Hero_Images/IMG_9362.jpg';
-import IMG_9364 from '../Hero_Images/IMG_9364.jpg';
-import IMG_9369 from '../Hero_Images/IMG_9369.jpg';
-import IMG_9372 from '../Hero_Images/IMG_9372.jpg';
-import IMG_9380 from '../Hero_Images/IMG_9380.jpg';
-import IMG_9383 from '../Hero_Images/IMG_9383.jpg';
-import IMG_9399 from '../Hero_Images/IMG_9399.jpg';
-import IMG_9454 from '../Hero_Images/IMG_9454.jpg';
-import IMG_9457 from '../Hero_Images/IMG_9457.jpg';
-import IMG_9459 from '../Hero_Images/IMG_9459.jpg';
-import IMG_9461 from '../Hero_Images/IMG_9461.jpg';
-import IMG_9474 from '../Hero_Images/IMG_9474.jpg';
-
 const ALL_IMAGES = [
-  IMG_9319, IMG_9322, IMG_9328, IMG_9332, IMG_9334, IMG_9338, IMG_9350,
-  IMG_9353, IMG_9359, IMG_9362, IMG_9364, IMG_9369, IMG_9372, IMG_9380,
-  IMG_9383, IMG_9399, IMG_9454, IMG_9457, IMG_9459, IMG_9461, IMG_9474,
+  'https://images.persuasive.online/Hero%20Images/IMG_9319.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9322.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9328.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9332.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9334.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9338.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9350.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9353.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9359.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9362.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9364.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9369.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9372.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9380.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9383.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9399.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9454.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9457.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9459.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9461.jpg',
+  'https://images.persuasive.online/Hero%20Images/IMG_9474.jpg',
 ];
 
 interface HomePageProps {
