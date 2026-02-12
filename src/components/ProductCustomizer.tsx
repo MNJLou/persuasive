@@ -12,109 +12,7 @@ import {
   SelectValue,
 } from './ui/select';
 
-// Import Black + Pink Embroidery
-import BlackPink_IMG_9123 from '../Shirt_Black_Pink_Embroidery/IMG_9123.jpg';
-import BlackPink_IMG_9125 from '../Shirt_Black_Pink_Embroidery/IMG_9125.jpg';
-import BlackPink_IMG_9128 from '../Shirt_Black_Pink_Embroidery/IMG_9128.jpg';
-import BlackPink_IMG_9133 from '../Shirt_Black_Pink_Embroidery/IMG_9133.jpg';
-import BlackPink_IMG_9217 from '../Shirt_Black_Pink_Embroidery/IMG_9217.jpg';
-import BlackPink_IMG_9221 from '../Shirt_Black_Pink_Embroidery/IMG_9221.jpg';
-import BlackPink_IMG_9222 from '../Shirt_Black_Pink_Embroidery/IMG_9222.jpg';
-import BlackPink_IMG_9224 from '../Shirt_Black_Pink_Embroidery/IMG_9224.jpg';
-import BlackPink_IMG_9228 from '../Shirt_Black_Pink_Embroidery/IMG_9228.jpg';
-import BlackPink_IMG_9233 from '../Shirt_Black_Pink_Embroidery/IMG_9233.jpg';
-
-// Import Black + Red Embroidery
-import BlackRed_IMG_9196 from '../Shirt_Black_Red_Embroidery/IMG_9196.jpg';
-import BlackRed_IMG_9198 from '../Shirt_Black_Red_Embroidery/IMG_9198.jpg';
-import BlackRed_IMG_9207 from '../Shirt_Black_Red_Embroidery/IMG_9207.jpg';
-import BlackRed_IMG_9209 from '../Shirt_Black_Red_Embroidery/IMG_9209.jpg';
-import BlackRed_IMG_9211 from '../Shirt_Black_Red_Embroidery/IMG_9211.jpg';
-import BlackRed_IMG_9212 from '../Shirt_Black_Red_Embroidery/IMG_9212.jpg';
-import BlackRed_IMG_9288 from '../Shirt_Black_Red_Embroidery/IMG_9288.jpg';
-import BlackRed_IMG_9292 from '../Shirt_Black_Red_Embroidery/IMG_9292.jpg';
-import BlackRed_IMG_9293 from '../Shirt_Black_Red_Embroidery/IMG_9293.jpg';
-import BlackRed_IMG_9295 from '../Shirt_Black_Red_Embroidery/IMG_9295.jpg';
-import BlackRed_IMG_9297 from '../Shirt_Black_Red_Embroidery/IMG_9297.jpg';
-import BlackRed_IMG_9300 from '../Shirt_Black_Red_Embroidery/IMG_9300.jpg';
-import BlackRed_IMG_9301 from '../Shirt_Black_Red_Embroidery/IMG_9301.jpg';
-
-// Import Cream + Red Embroidery
-import CreamRed_IMG_9150 from '../Shirt_Cream_Red_Embroidery/IMG_9150.jpg';
-import CreamRed_IMG_9153 from '../Shirt_Cream_Red_Embroidery/IMG_9153.jpg';
-import CreamRed_IMG_9159 from '../Shirt_Cream_Red_Embroidery/IMG_9159.jpg';
-import CreamRed_IMG_9266 from '../Shirt_Cream_Red_Embroidery/IMG_9266.jpg';
-import CreamRed_IMG_9269 from '../Shirt_Cream_Red_Embroidery/IMG_9269.jpg';
-import CreamRed_IMG_9280 from '../Shirt_Cream_Red_Embroidery/IMG_9280.jpg';
-import CreamRed_IMG_9282 from '../Shirt_Cream_Red_Embroidery/IMG_9282.jpg';
-
-// Import White + Blue Embroidery
-import WhiteBlue_IMG_9166 from '../Shirt_White_Blue_Embroidery/IMG_9166.jpg';
-import WhiteBlue_IMG_9168 from '../Shirt_White_Blue_Embroidery/IMG_9168.jpg';
-import WhiteBlue_IMG_9172 from '../Shirt_White_Blue_Embroidery/IMG_9172.jpg';
-import WhiteBlue_IMG_9175 from '../Shirt_White_Blue_Embroidery/IMG_9175.jpg';
-import WhiteBlue_IMG_9185 from '../Shirt_White_Blue_Embroidery/IMG_9185.jpg';
-import WhiteBlue_IMG_9239 from '../Shirt_White_Blue_Embroidery/IMG_9239.jpg';
-import WhiteBlue_IMG_9241 from '../Shirt_White_Blue_Embroidery/IMG_9241.jpg';
-import WhiteBlue_IMG_9244 from '../Shirt_White_Blue_Embroidery/IMG_9244.jpg';
-import WhiteBlue_IMG_9249 from '../Shirt_White_Blue_Embroidery/IMG_9249.jpg';
-
-// Import Grey + Yellow Embroidery
-import GreyYellow_IMG_9812 from '../Grey Shirt Yellow Embroidery/IMG_9812.jpg';
-import GreyYellow_IMG_9813 from '../Grey Shirt Yellow Embroidery/IMG_9813.jpg';
-import GreyYellow_IMG_9814 from '../Grey Shirt Yellow Embroidery/IMG_9814.jpg';
-import GreyYellow_IMG_9815 from '../Grey Shirt Yellow Embroidery/IMG_9815.jpg';
-import GreyYellow_IMG_9816 from '../Grey Shirt Yellow Embroidery/IMG_9816.jpg';
-import GreyYellow_IMG_9817 from '../Grey Shirt Yellow Embroidery/IMG_9817.jpg';
-import GreyYellow_IMG_9818 from '../Grey Shirt Yellow Embroidery/IMG_9818.jpg';
-import GreyYellow_IMG_9820 from '../Grey Shirt Yellow Embroidery/IMG_9820.jpg';
-import GreyYellow_IMG_9821 from '../Grey Shirt Yellow Embroidery/IMG_9821.jpg';
-import GreyYellow_IMG_9823 from '../Grey Shirt Yellow Embroidery/IMG_9823.jpg';
-import GreyYellow_IMG_9900 from '../Grey Shirt Yellow Embroidery/IMG_9900.jpg';
-import GreyYellow_IMG_9903 from '../Grey Shirt Yellow Embroidery/IMG_9903.jpg';
-import GreyYellow_IMG_9905 from '../Grey Shirt Yellow Embroidery/IMG_9905.jpg';
-import GreyYellow_IMG_9911 from '../Grey Shirt Yellow Embroidery/IMG_9911.jpg';
-import GreyYellow_IMG_9913 from '../Grey Shirt Yellow Embroidery/IMG_9913.jpg';
-import GreyYellow_IMG_9915 from '../Grey Shirt Yellow Embroidery/IMG_9915.jpg';
-import GreyYellow_IMG_9916 from '../Grey Shirt Yellow Embroidery/IMG_9916.jpg';
-import GreyYellow_IMG_9918 from '../Grey Shirt Yellow Embroidery/IMG_9918.jpg';
-import GreyYellow_IMG_9919 from '../Grey Shirt Yellow Embroidery/IMG_9919.jpg';
-
-// Import Mint Green + Teal Embroidery
-import MintGreenTeal_IMG_9789 from '../Mint Green Shirt Teal Embroidery/IMG_9789.jpg';
-import MintGreenTeal_IMG_9791 from '../Mint Green Shirt Teal Embroidery/IMG_9791.jpg';
-import MintGreenTeal_IMG_9792 from '../Mint Green Shirt Teal Embroidery/IMG_9792.jpg';
-import MintGreenTeal_IMG_9793 from '../Mint Green Shirt Teal Embroidery/IMG_9793.jpg';
-import MintGreenTeal_IMG_9797 from '../Mint Green Shirt Teal Embroidery/IMG_9797.jpg';
-import MintGreenTeal_IMG_9798 from '../Mint Green Shirt Teal Embroidery/IMG_9798.jpg';
-import MintGreenTeal_IMG_9800 from '../Mint Green Shirt Teal Embroidery/IMG_9800.jpg';
-import MintGreenTeal_IMG_9804 from '../Mint Green Shirt Teal Embroidery/IMG_9804.jpg';
-import MintGreenTeal_IMG_9805 from '../Mint Green Shirt Teal Embroidery/IMG_9805.jpg';
-import MintGreenTeal_IMG_9866 from '../Mint Green Shirt Teal Embroidery/IMG_9866.jpg';
-import MintGreenTeal_IMG_9867 from '../Mint Green Shirt Teal Embroidery/IMG_9867.jpg';
-import MintGreenTeal_IMG_9870 from '../Mint Green Shirt Teal Embroidery/IMG_9870.jpg';
-import MintGreenTeal_IMG_9872 from '../Mint Green Shirt Teal Embroidery/IMG_9872.jpg';
-import MintGreenTeal_IMG_9873 from '../Mint Green Shirt Teal Embroidery/IMG_9873.jpg';
-import MintGreenTeal_IMG_9874 from '../Mint Green Shirt Teal Embroidery/IMG_9874.jpg';
-import MintGreenTeal_IMG_9875 from '../Mint Green Shirt Teal Embroidery/IMG_9875.jpg';
-import MintGreenTeal_IMG_9876 from '../Mint Green Shirt Teal Embroidery/IMG_9876.jpg';
-import MintGreenTeal_IMG_9877 from '../Mint Green Shirt Teal Embroidery/IMG_9877.jpg';
-
-// Import Pale Blue + Orange Embroidery
-import PaleBlueOrange_IMG_9765 from '../Pale Blue Shirt Orange Embroidery/IMG_9765.jpg';
-import PaleBlueOrange_IMG_9768 from '../Pale Blue Shirt Orange Embroidery/IMG_9768.jpg';
-import PaleBlueOrange_IMG_9772 from '../Pale Blue Shirt Orange Embroidery/IMG_9772.jpg';
-import PaleBlueOrange_IMG_9773 from '../Pale Blue Shirt Orange Embroidery/IMG_9773.jpg';
-import PaleBlueOrange_IMG_9778 from '../Pale Blue Shirt Orange Embroidery/IMG_9778.jpg';
-import PaleBlueOrange_IMG_9782 from '../Pale Blue Shirt Orange Embroidery/IMG_9782.jpg';
-import PaleBlueOrange_IMG_9827 from '../Pale Blue Shirt Orange Embroidery/IMG_9827.jpg';
-import PaleBlueOrange_IMG_9829 from '../Pale Blue Shirt Orange Embroidery/IMG_9829.jpg';
-import PaleBlueOrange_IMG_9830 from '../Pale Blue Shirt Orange Embroidery/IMG_9830.jpg';
-import PaleBlueOrange_IMG_9835 from '../Pale Blue Shirt Orange Embroidery/IMG_9835.jpg';
-import PaleBlueOrange_IMG_9841 from '../Pale Blue Shirt Orange Embroidery/IMG_9841.jpg';
-import PaleBlueOrange_IMG_9844 from '../Pale Blue Shirt Orange Embroidery/IMG_9844.jpg';
-
-import SizeGuide from '../Hero_Images/SizeGuide.jpg';
+const SizeGuide = 'https://images.persuasive.online/Hero%20Images/SizeGuide.jpg';
 
 interface ProductCustomizerProps {
   onAddToCart: (item: CartItem) => void;
@@ -162,13 +60,108 @@ const embroideryColors = [
 
 // Image mappings by shirt and embroidery color combination
 const shirtImagesByVariant: { [key: string]: string[] } = {
-  'White-Blue': [WhiteBlue_IMG_9166, WhiteBlue_IMG_9168, WhiteBlue_IMG_9172, WhiteBlue_IMG_9175, WhiteBlue_IMG_9185, WhiteBlue_IMG_9239, WhiteBlue_IMG_9241, WhiteBlue_IMG_9244, WhiteBlue_IMG_9249],
-  'Black-Pink': [BlackPink_IMG_9123, BlackPink_IMG_9125, BlackPink_IMG_9128, BlackPink_IMG_9133, BlackPink_IMG_9217, BlackPink_IMG_9221, BlackPink_IMG_9222, BlackPink_IMG_9224, BlackPink_IMG_9228, BlackPink_IMG_9233],
-  'Black-Red': [BlackRed_IMG_9196, BlackRed_IMG_9198, BlackRed_IMG_9207, BlackRed_IMG_9209, BlackRed_IMG_9211, BlackRed_IMG_9212, BlackRed_IMG_9288, BlackRed_IMG_9292, BlackRed_IMG_9293, BlackRed_IMG_9295, BlackRed_IMG_9297, BlackRed_IMG_9300, BlackRed_IMG_9301],
-  'Cream-Red': [CreamRed_IMG_9150, CreamRed_IMG_9153, CreamRed_IMG_9159, CreamRed_IMG_9266, CreamRed_IMG_9269, CreamRed_IMG_9280, CreamRed_IMG_9282],
-  'Grey-Yellow': [GreyYellow_IMG_9812, GreyYellow_IMG_9813, GreyYellow_IMG_9814, GreyYellow_IMG_9815, GreyYellow_IMG_9816, GreyYellow_IMG_9817, GreyYellow_IMG_9818, GreyYellow_IMG_9820, GreyYellow_IMG_9821, GreyYellow_IMG_9823, GreyYellow_IMG_9900, GreyYellow_IMG_9903, GreyYellow_IMG_9905, GreyYellow_IMG_9911, GreyYellow_IMG_9913, GreyYellow_IMG_9915, GreyYellow_IMG_9916, GreyYellow_IMG_9918, GreyYellow_IMG_9919],
-  'Mint Green-Teal': [MintGreenTeal_IMG_9789, MintGreenTeal_IMG_9791, MintGreenTeal_IMG_9792, MintGreenTeal_IMG_9793, MintGreenTeal_IMG_9797, MintGreenTeal_IMG_9798, MintGreenTeal_IMG_9800, MintGreenTeal_IMG_9804, MintGreenTeal_IMG_9805, MintGreenTeal_IMG_9866, MintGreenTeal_IMG_9867, MintGreenTeal_IMG_9870, MintGreenTeal_IMG_9872, MintGreenTeal_IMG_9873, MintGreenTeal_IMG_9874, MintGreenTeal_IMG_9875, MintGreenTeal_IMG_9876, MintGreenTeal_IMG_9877],
-  'Pale Blue-Orange': [PaleBlueOrange_IMG_9765, PaleBlueOrange_IMG_9768, PaleBlueOrange_IMG_9772, PaleBlueOrange_IMG_9773, PaleBlueOrange_IMG_9778, PaleBlueOrange_IMG_9782, PaleBlueOrange_IMG_9827, PaleBlueOrange_IMG_9829, PaleBlueOrange_IMG_9830, PaleBlueOrange_IMG_9835, PaleBlueOrange_IMG_9841, PaleBlueOrange_IMG_9844],
+  'White-Blue': [
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9166.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9168.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9172.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9175.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9185.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9239.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9241.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9244.jpg',
+    'https://images.persuasive.online/White%20Shirt%20Blue%20Embroidery/IMG_9249.jpg',
+  ],
+  'Black-Pink': [
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9123.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9125.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9128.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9133.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9217.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9221.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9222.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9224.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9228.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Pink%20Embroidery/IMG_9233.jpg',
+  ],
+  'Black-Red': [
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9196.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9198.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9207.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9209.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9211.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9212.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9288.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9292.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9293.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9295.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9297.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9300.jpg',
+    'https://images.persuasive.online/Black%20Shirt%20Red%20Embroidery/IMG_9301.jpg',
+  ],
+  'Cream-Red': [
+    'https://images.persuasive.online/Cream%20Shirt%20Red%20Embroidery/IMG_9150.jpg',
+    'https://images.persuasive.online/Cream%20Shirt%20Red%20Embroidery/IMG_9153.jpg',
+    'https://images.persuasive.online/Cream%20Shirt%20Red%20Embroidery/IMG_9159.jpg',
+    'https://images.persuasive.online/Cream%20Shirt%20Red%20Embroidery/IMG_9266.jpg',
+    'https://images.persuasive.online/Cream%20Shirt%20Red%20Embroidery/IMG_9269.jpg',
+    'https://images.persuasive.online/Cream%20Shirt%20Red%20Embroidery/IMG_9280.jpg',
+    'https://images.persuasive.online/Cream%20Shirt%20Red%20Embroidery/IMG_9282.jpg',
+  ],
+  'Grey-Yellow': [
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9812.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9813.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9814.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9815.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9816.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9817.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9818.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9820.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9821.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9823.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9900.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9903.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9905.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9911.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9913.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9915.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9916.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9918.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery/IMG_9919.jpg',
+  ],
+  'Mint Green-Teal': [
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9789.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9791.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9792.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9793.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9797.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9798.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9800.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9804.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9805.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9866.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9867.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9870.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9872.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9873.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9874.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9875.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9876.jpg',
+    'https://images.persuasive.online/Mint%20Green%20Shirt%20Teal%20Embroidery/IMG_9877.jpg',
+  ],
+  'Pale Blue-Orange': [
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9765.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9768.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9772.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9773.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9778.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9782.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9827.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9829.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9830.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9835.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9841.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9844.jpg',
+  ],
 };
 
 // Stock count: shirt-embroidery-size combination
