@@ -25,6 +25,8 @@ const shirtColors = [
   { name: 'Grey', value: '#9CA3AF' },
   { name: 'Mint Green', value: '#A7F3D0' },
   { name: 'Pale Blue', value: '#BAE6FD' },
+  { name: 'Grey Sleeveless', value: '#9CA3AF' },
+  { name: 'Pale Blue Sleeveless', value: '#BAE6FD' },
 ];
 
 const embroideryColorsByShirt: { [key: string]: typeof embroideryColors } = {
@@ -46,6 +48,12 @@ const embroideryColorsByShirt: { [key: string]: typeof embroideryColors } = {
   ],
   'Pale Blue': [
     { name: 'Orange', value: '#FB923C' },
+  ],
+  'Grey Sleeveless': [
+    { name: 'Yellow', value: '#EAB308' },
+  ],
+  'Pale Blue Sleeveless': [
+    { name: 'Green', value: '#10B981' },
   ],
 };
 
@@ -162,6 +170,32 @@ const shirtImagesByVariant: { [key: string]: string[] } = {
     'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9841.jpg',
     'https://images.persuasive.online/Pale%20Blue%20Shirt%20Orange%20Embroidery/IMG_9844.jpg',
   ],
+  'Grey Sleeveless-Yellow': [
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9846.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9847.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9848.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9849.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9851.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9857.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9858.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9861.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9862.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9864.jpg',
+    'https://images.persuasive.online/Grey%20Shirt%20Yellow%20Embroidery%20Sleeveless/IMG_9865.jpg',
+  ],
+  'Pale Blue Sleeveless-Green': [
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9883.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9884.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9885.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9886.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9888.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9889.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9892.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9893.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9895.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9897.jpg',
+    'https://images.persuasive.online/Pale%20Blue%20Shirt%20Green%20Embroidery%20Sleeveless/IMG_9898.jpg',
+  ],
 };
 
 // Stock count: shirt-embroidery-size combination
@@ -201,6 +235,16 @@ const stockCounts: { [key: string]: number } = {
   'Pale Blue-Orange-Large': 5,
   'Pale Blue-Orange-XL': 1,
   'Pale Blue-Orange-XXL': 3,
+  'Grey Sleeveless-Yellow-Small': 5,
+  'Grey Sleeveless-Yellow-Medium': 6,
+  'Grey Sleeveless-Yellow-Large': 4,
+  'Grey Sleeveless-Yellow-XL': 2,
+  'Grey Sleeveless-Yellow-XXL': 1,
+  'Pale Blue Sleeveless-Green-Small': 4,
+  'Pale Blue Sleeveless-Green-Medium': 5,
+  'Pale Blue Sleeveless-Green-Large': 3,
+  'Pale Blue Sleeveless-Green-XL': 2,
+  'Pale Blue Sleeveless-Green-XXL': 0,
 };
 
 export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
@@ -365,7 +409,7 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
                 Shirt Color: <span className="text-gray-900">{selectedShirtColor.name}</span>
               </label>
               <div className="flex flex-wrap gap-3">
-                {shirtColors.map((color) => (
+                {shirtColors.slice(0, 6).map((color) => (
                   <button
                     key={color.name}
                     onClick={() => handleShirtColorChange(color)}
@@ -379,6 +423,34 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
                     style={{ backgroundColor: color.value }}
                     aria-label={`Select ${color.name}`}
                   >
+                    {selectedShirtColor.name === color.name && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Check
+                          className="w-5 h-5"
+                          style={{
+                            color: color.name === 'White' ? '#000000' : '#FFFFFF',
+                          }}
+                        />
+                      </div>
+                    )}
+                  </button>
+                ))}
+                <div className="w-full h-px bg-gray-300 my-3"></div>
+                {shirtColors.slice(6).map((color) => (
+                  <button
+                    key={color.name}
+                    onClick={() => handleShirtColorChange(color)}
+                    className={`relative w-12 h-12 rounded-full transition-all ${
+                      color.border ? 'border-2 border-gray-300' : ''
+                    } ${
+                      selectedShirtColor.name === color.name
+                        ? 'ring-2 ring-blue-600 ring-offset-2 scale-110'
+                        : 'hover:scale-105'
+                    }`}
+                    style={{ backgroundColor: color.value }}
+                    aria-label={`Select ${color.name}`}
+                  >
+                    
                     {selectedShirtColor.name === color.name && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <Check
