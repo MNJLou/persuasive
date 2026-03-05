@@ -42,6 +42,18 @@ let stockData = [
   { color: 'Pale Blue-Orange', size: 'Large', stock: 2 },
   { color: 'Pale Blue-Orange', size: 'XL', stock: 1 },
   { color: 'Pale Blue-Orange', size: 'XXL', stock: 0 },
+  // Grey Sleeveless-Yellow
+  { color: 'Grey Sleeveless-Yellow', size: 'Small', stock: 1 },
+  { color: 'Grey Sleeveless-Yellow', size: 'Medium', stock: 2 },
+  { color: 'Grey Sleeveless-Yellow', size: 'Large', stock: 2 },
+  { color: 'Grey Sleeveless-Yellow', size: 'XL', stock: 1 },
+  { color: 'Grey Sleeveless-Yellow', size: 'XXL', stock: 1 },
+  // Pale Blue Sleeveless-Green
+  { color: 'Pale Blue Sleeveless-Green', size: 'Small', stock: 1 },
+  { color: 'Pale Blue Sleeveless-Green', size: 'Medium', stock: 2 },
+  { color: 'Pale Blue Sleeveless-Green', size: 'Large', stock: 2 },
+  { color: 'Pale Blue Sleeveless-Green', size: 'XL', stock: 1 },
+  { color: 'Pale Blue Sleeveless-Green', size: 'XXL', stock: 1 },
 ];
 
 export default async function handler(req, res) {
