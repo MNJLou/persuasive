@@ -25,7 +25,7 @@ let stockData = [
   { color: 'Cream-Red', size: 'XL', stock: 1 },
   { color: 'Cream-Red', size: 'XXL', stock: 0 },
   // Grey-Yellow
-  { color: 'Grey-Yellow', size: 'Small', stock: 0 },
+  { color: 'Grey-Yellow', size: 'Small', stock: 1 },
   { color: 'Grey-Yellow', size: 'Medium', stock: 2 },
   { color: 'Grey-Yellow', size: 'Large', stock: 2 },
   { color: 'Grey-Yellow', size: 'XL', stock: 1 },

@@ -524,7 +524,7 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
                             {size}
                           </span>
                           <span className="ml-2 text-gray-600">
-                            ({stock} in stock)
+                            (in stock)
                           </span>
                         </SelectItem>
                       );
