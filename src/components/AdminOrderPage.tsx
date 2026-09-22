@@ -6,7 +6,7 @@ import { CartItem } from '../App';
 import { CheckCircle, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { itemTitle, itemVariant } from './CheckoutPage';
-import { PROMO_CODES } from './ProceedCheckoutPage';
+import { PROMO_CODES, newOrderRef, useAmbassadorCode } from '../lib/orderCodes';
 
 interface AdminOrderPageProps {
   onBack: () => void;
@@ -47,6 +47,7 @@ export function AdminOrderPage({ onBack }: AdminOrderPageProps) {
   const [promoInput, setPromoInput] = useState('');
   const [appliedPromo, setAppliedPromo] = useState<{ code: string; rate: number } | null>(null);
   const [promoError, setPromoError] = useState('');
+  const ambassador = useAmbassadorCode();
 
   useEffect(() => {
     if (sessionStorage.getItem('adminAuth') === 'true') {
@@ -111,6 +112,7 @@ export function AdminOrderPage({ onBack }: AdminOrderPageProps) {
     }
 
     setIsProcessing(true);
+    const orderRef = newOrderRef();
 
     try {
       const emailRes = await fetch('/api/send-email', {
@@ -132,6 +134,8 @@ export function AdminOrderPage({ onBack }: AdminOrderPageProps) {
           subtotal,
           discount,
           promoCode: appliedPromo?.code || null,
+          ambassadorCode: ambassador.applied?.code || null,
+          orderRef,
           isAdminOrder: true,
         }),
       });
@@ -141,17 +145,29 @@ export function AdminOrderPage({ onBack }: AdminOrderPageProps) {
         throw new Error(errData.error || 'Failed to send order email');
       }
 
-      for (const item of cartItems) {
-        const colorCombo = `${item.shirtColor}-${item.embroideryColor}`;
-        await fetch('/api/admin/stock', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            color: colorCombo,
-            size: item.size,
-            quantity: 1,
-          }),
-        });
+      // Ledger + stock in one idempotent call, same path the paid flow uses.
+      const recordRes = await fetch('/api/orders/record', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderRef,
+          customerName: `${formData.firstName} ${formData.surname}`.trim(),
+          customerEmail: formData.email,
+          cartItems,
+          subtotal,
+          discount,
+          total,
+          promoCode: appliedPromo?.code || null,
+          ambassadorCode: ambassador.applied?.code || null,
+          isAdminOrder: true,
+        }),
+      });
+
+      if (!recordRes.ok) {
+        // The emails have already gone out, so the order still stands — but an
+        // admin needs to know stock and commission were not written.
+        console.error('Failed to record admin order:', await recordRes.text());
+        toast.error('Order emailed, but recording it failed — check stock and commission');
       }
 
       toast.success('Admin order placed successfully');
@@ -169,6 +185,7 @@ export function AdminOrderPage({ onBack }: AdminOrderPageProps) {
     setFormData(emptyForm);
     setOrderPlaced(false);
     handleRemovePromo();
+    ambassador.clear();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -271,6 +288,42 @@ export function AdminOrderPage({ onBack }: AdminOrderPageProps) {
                   </div>
                 )}
                 {promoError && <p className="text-sm text-red-600 mt-1">{promoError}</p>}
+              </div>
+
+
+              <div className="pt-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Ambassador code</label>
+                {ambassador.applied ? (
+                  <div className="flex items-center justify-between border border-gray-300 rounded-md px-3 py-2 text-sm">
+                    <span className="font-mono">{ambassador.applied.code}</span>
+                    <button
+                      type="button"
+                      onClick={ambassador.clear}
+                      className="text-red-600 hover:text-red-800 transition-colors"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      type="text"
+                      value={ambassador.input}
+                      onChange={(e) => ambassador.setInput(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); ambassador.apply(); } }}
+                      placeholder="Enter code"
+                    />
+                    <Button type="button" variant="outline" onClick={ambassador.apply} disabled={ambassador.checking || !ambassador.input.trim()}>
+                      {ambassador.checking ? 'Checking' : 'Apply'}
+                    </Button>
+                  </div>
+                )}
+                <p className="text-xs text-gray-500 mt-1">
+                  {ambassador.applied
+                    ? `Referred by ${ambassador.applied.name}. Commission is tracked separately — the total is unchanged.`
+                    : 'Optional. Attribution only — it does not discount the order.'}
+                </p>
+                {ambassador.error && <p className="text-sm text-red-600 mt-1">{ambassador.error}</p>}
               </div>
 
               <div className="flex justify-between font-semibold text-blue-600 pt-2 border-t border-gray-200">

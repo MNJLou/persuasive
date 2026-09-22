@@ -8,7 +8,9 @@ import { ProceedCheckoutPage } from './components/ProceedCheckoutPage';
 import { PaymentSuccess } from './components/PaymentSuccess';
 import { AdminPanel } from './components/AdminPanel';
 import { AdminOrderPage } from './components/AdminOrderPage';
+import { AdminApp } from './components/admin/AdminApp';
 import { Header, CrumbBar, Footer, Icon } from './components/persuasive/ui';
+import { storeAdminCredentials } from './lib/adminApi';
 
 export interface CartItem {
   id: string;
@@ -26,7 +28,25 @@ export interface CartItem {
 
 type Page = 'home' | 'shop' | 'checkout' | 'proceed-checkout' | 'checkout-success' | 'admin' | 'admin-order';
 
+// admin.persuasive.online is the same deployment as the shop, told apart by
+// hostname. Evaluated once at module load — the host cannot change without a
+// full page load.
+const IS_ADMIN_HOST = window.location.hostname.startsWith('admin.');
+
 export default function App() {
+  if (IS_ADMIN_HOST) {
+    return (
+      <div style={{ minHeight: '100vh' }}>
+        <Toaster />
+        <AdminApp />
+      </div>
+    );
+  }
+
+  return <ShopApp />;
+}
+
+function ShopApp() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [currentPage, setCurrentPage] = useState<Page>(() => {
     if (window.location.pathname === '/admin') return 'admin';
@@ -94,7 +114,7 @@ export default function App() {
         body: JSON.stringify({ password: adminPassword }),
       });
       if (res.ok) {
-        sessionStorage.setItem('adminAuth', 'true');
+        storeAdminCredentials(adminPassword);
         closeAdmin();
         toast.success('Admin access granted');
         go('admin-order');

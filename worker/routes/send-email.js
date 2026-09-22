@@ -1,19 +1,15 @@
 import { Resend } from 'resend';
+import { json, readJson } from '../lib/http.js';
 
-export default async function handler(req, res) {
-  console.log("=== SEND EMAIL DEBUG START ===");
-  console.log("Method:", req.method);
-  console.log("Environment variables check:");
-  console.log("  - NODE_ENV:", process.env.NODE_ENV);
-  console.log("  - RESEND_API_KEY exists:", !!process.env.RESEND_API_KEY);
-  console.log("  - RESEND_API_KEY length:", process.env.RESEND_API_KEY?.length);
-  console.log("  - RESEND_API_KEY first 5 chars:", process.env.RESEND_API_KEY?.substring(0, 5));
-  console.log("  - RESEND_API_KEY last 5 chars:", process.env.RESEND_API_KEY?.slice(-5));
-  console.log("  - Has quotes?", process.env.RESEND_API_KEY?.includes('"'));
-  console.log("=== SEND EMAIL DEBUG END ===");
+function resendError(which, error) {
+  const err = new Error(`Resend rejected the ${which} email: ${error.message || error.name}`);
+  err.name = error.name || 'ResendError';
+  return err;
+}
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+export default async function handler(request, env) {
+  if (request.method !== 'POST') {
+    return json({ error: 'Method not allowed' }, 405);
   }
 
   const {
@@ -32,25 +28,27 @@ export default async function handler(req, res) {
     subtotal,
     discount,
     promoCode,
+    ambassadorCode,
+    orderRef,
     isAdminOrder
-  } = req.body;
+  } = await readJson(request);
 
   if (!email || !firstName || !cartItems || total === undefined) {
-    return res.status(400).json({ error: 'Missing required fields' });
+    return json({ error: 'Missing required fields' }, 400);
   }
 
   // Check if API key exists
-  if (!process.env.RESEND_API_KEY) {
+  if (!env.RESEND_API_KEY) {
     console.error("❌ RESEND_API_KEY is undefined");
-    return res.status(500).json({ 
+    return json({ 
       error: 'Server configuration error',
       details: 'RESEND_API_KEY environment variable is not set'
-    });
+    }, 500);
   }
 
   try {
     // Initialize Resend here
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(env.RESEND_API_KEY);
     console.log("✅ Resend initialized successfully");
 
     // Format order items for email. Caps read differently from tees.
@@ -79,6 +77,18 @@ export default async function handler(req, res) {
     `
       )
       .join('');
+
+    // Owner-only. A customer has no business seeing what their referrer earns,
+    // so this never appears in the customer email. It keeps the inbox usable as
+    // a cross-check against the D1 commission ledger.
+    const ambassadorRowHtml = ambassadorCode
+      ? `
+                  <tr style="background-color: #f5f3ff;">
+                    <td style="padding: 8px; font-weight: bold; color: #6d28d9;">Ambassador referral</td>
+                    <td></td>
+                    <td style="padding: 8px; text-align: right; font-weight: bold; color: #6d28d9;">${ambassadorCode}</td>
+                  </tr>`
+      : '';
 
     const hasDiscount = discount && discount > 0;
     const discountLabel = promoCode ? `Discount (${promoCode})` : 'Discount';
@@ -243,7 +253,11 @@ export default async function handler(req, res) {
       html: customerEmailHtml,
     });
 
-    console.log('✅ Customer email sent:', customerEmailResponse);
+    // The SDK does not throw on API errors — it returns { data: null, error }.
+    // Without this check a bad key or unverified domain logs "sent" and
+    // answers 200 while nothing was delivered.
+    if (customerEmailResponse.error) throw resendError('customer', customerEmailResponse.error);
+    console.log('✅ Customer email sent:', customerEmailResponse.data?.id);
 
     // Owner email with full order details
     const ownerEmailHtml = `
@@ -333,6 +347,7 @@ export default async function handler(req, res) {
             <div class="header">
               <h1>🛍️ NEW ORDER RECEIVED</h1>
               <p>Order from: ${firstName} ${surname}</p>
+              ${orderRef ? `<p style="font-family:monospace; color:#6b7280; font-size:13px;">${orderRef}</p>` : ''}
               ${isAdminOrder ? '<p style="display:inline-block; margin-top:10px; padding:6px 12px; background-color:#fef3c7; color:#92400e; border:1px solid #f59e0b; border-radius:4px; font-weight:bold; font-size:13px;">⚙️ ADMIN-PLACED ORDER (no payment processed)</p>' : ''}
             </div>
 
@@ -390,6 +405,7 @@ export default async function handler(req, res) {
                     <td style="padding: 8px; text-align: right; font-weight: bold;">R${subtotal.toFixed(2)}</td>
                   </tr>
                   ${ownerDiscountRowHtml}
+                  ${ambassadorRowHtml}
                   <tr class="total-row" style="background-color: #fef2f2;">
                     <td style="padding: 12px;">TOTAL (excluding shipping)</td>
                     <td></td>
@@ -406,6 +422,7 @@ export default async function handler(req, res) {
                 <li>Calculate shipping costs for this order</li>
                 <li>Send shipping payment details to customer</li>
                 <li>Begin order preparation once payment is confirmed</li>
+                ${ambassadorCode ? `<li>Commission is owed on this order to ambassador <strong>${ambassadorCode}</strong> — see the ledger in the admin site</li>` : ''}
               </ul>
             </div>
 
@@ -426,12 +443,13 @@ export default async function handler(req, res) {
       html: ownerEmailHtml,
     });
 
-    console.log('✅ Owner email sent:', ownerEmailResponse);
+    if (ownerEmailResponse.error) throw resendError('owner', ownerEmailResponse.error);
+    console.log('✅ Owner email sent:', ownerEmailResponse.data?.id);
 
-    return res.status(200).json({ 
+    return json({ 
       success: true, 
-      customerEmailId: customerEmailResponse.id,
-      ownerEmailId: ownerEmailResponse.id
+      customerEmailId: customerEmailResponse.data?.id,
+      ownerEmailId: ownerEmailResponse.data?.id
     });
   } catch (error) {
     console.error('❌ Email sending failed:', error);
@@ -439,10 +457,10 @@ export default async function handler(req, res) {
     console.error('Error message:', error.message);
     console.error('Error stack:', error.stack);
     
-    return res.status(500).json({
+    return json({
       error: 'Failed to send confirmation email',
       details: error.message,
       name: error.name
-    });
+    }, 500);
   }
 }

@@ -1,0 +1,38 @@
+// Cloudflare Workers config: the React build is served as static assets and
+// worker/index.js answers /api/*. Secrets (ADMIN_PASSWORD, RESEND_API_KEY,
+// YOCO_SECRET_KEY) are NOT here — `wrangler secret put <NAME>` for production,
+// .dev.vars for `wrangler dev`.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "persuasive",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-21",
+  // resend and friends expect Node built-ins; also populates process.env.
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Only API calls go through the Worker; everything else is served straight
+    // from the asset store with the SPA fallback (needed for /admin and the
+    // admin.* hostname, which App.tsx routes client-side).
+    "run_worker_first": ["/api/*"],
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "persuasive",
+      "database_id": "62e84a6d-9c40-4da3-a7ec-2e8a8cbd6d1c",
+      // Lets `wrangler d1 migrations apply persuasive --local|--remote` track
+      // migrations/*.sql. Both files are idempotent, so adopting this on the
+      // already-migrated remote database is safe.
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Every deployed version otherwise gets its own PUBLIC preview URL, all
+  // sharing the production D1 — stale code able to write real orders/stock.
+  "preview_urls": false,
+  "observability": {
+    "enabled": true
+  }
+}

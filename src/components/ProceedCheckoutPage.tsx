@@ -8,16 +8,12 @@ import { toast } from 'sonner';
 import { CartItem } from '../App';
 import { Icon } from './persuasive/ui';
 import { itemTitle } from './CheckoutPage';
+import { PROMO_CODES, newOrderRef, useAmbassadorCode } from '../lib/orderCodes';
 
 interface ProceedCheckoutPageProps {
   cartItems: CartItem[];
   onBack: () => void;
 }
-
-// Promo codes → fractional discount on subtotal.
-export const PROMO_CODES: Record<string, number> = {
-  PER20: 0.20,
-};
 
 interface FormData {
   firstName: string;
@@ -41,6 +37,7 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
   const [promoInput, setPromoInput] = useState('');
   const [appliedPromo, setAppliedPromo] = useState<{ code: string; rate: number } | null>(null);
   const [promoError, setPromoError] = useState('');
+  const ambassador = useAmbassadorCode();
 
   const subtotal = cartItems.reduce((t, i) => t + i.price, 0);
   const discount = appliedPromo ? subtotal * appliedPromo.rate : 0;
@@ -86,12 +83,16 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
 
     try {
       const orderData = {
+        // Generated here so the reference survives the redirect to Yoco and back;
+        // /api/orders/record uses it to make stock and commission idempotent.
+        orderRef: newOrderRef(),
         cartItems,
         formData,
         total,
         subtotal,
         discount,
         promoCode: appliedPromo?.code || null,
+        ambassadorCode: ambassador.applied?.code || null,
         timestamp: new Date().toISOString(),
       };
       localStorage.setItem('pendingOrder', JSON.stringify(orderData));
@@ -218,6 +219,38 @@ export function ProceedCheckoutPage({ cartItems, onBack }: ProceedCheckoutPagePr
                 </div>
               )}
               {promoError && <p className="mono-sm" style={{ marginTop: 8, color: 'var(--accent)' }}>{promoError}</p>}
+            </div>
+
+
+            <div style={{ marginTop: 16 }}>
+              <label className="field-label">Ambassador code</label>
+              {ambassador.applied ? (
+                <div className="spread" style={{ border: '1px solid var(--ink)', padding: '10px 14px' }}>
+                  <span className="mono">{ambassador.applied.code}</span>
+                  <button type="button" className="navlink" onClick={ambassador.clear}>Remove</button>
+                </div>
+              ) : (
+                <div className="row" style={{ gap: 8 }}>
+                  <input
+                    className="input"
+                    type="text"
+                    value={ambassador.input}
+                    onChange={(e) => ambassador.setInput(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); ambassador.apply(); } }}
+                    placeholder="Enter code"
+                    style={{ flex: 1 }}
+                  />
+                  <button type="button" className="btn" onClick={ambassador.apply} disabled={ambassador.checking || !ambassador.input.trim()}>
+                    {ambassador.checking ? 'Checking' : 'Apply'}
+                  </button>
+                </div>
+              )}
+              <p className="mono-sm dim" style={{ marginTop: 8 }}>
+                {ambassador.applied
+                  ? `Referred by ${ambassador.applied.name}. Credited to them — your total is unchanged.`
+                  : 'Optional. Credits your referrer — it does not change your total.'}
+              </p>
+              {ambassador.error && <p className="mono-sm" style={{ marginTop: 8, color: 'var(--accent)' }}>{ambassador.error}</p>}
             </div>
 
             <hr className="rule rule-ink" style={{ margin: '16px 0' }} />

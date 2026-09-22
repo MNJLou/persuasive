@@ -2,6 +2,11 @@
   import { defineConfig } from 'vite';
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
+  import { fileURLToPath } from 'url';
+
+  // package.json is "type": "module" (the Worker entry needs ESM), so there is
+  // no __dirname here.
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
   export default defineConfig({
     plugins: [react()],
@@ -56,5 +61,11 @@
     server: {
       port: 3000,
       open: true,
+      // `npm run dev` serves the UI only. Run `npm run dev:api` (wrangler dev on
+      // :8787) alongside it and /api/* is proxied there, giving the full stack
+      // with Vite hot reload.
+      proxy: {
+        '/api': 'http://localhost:8787',
+      },
     },
   });
