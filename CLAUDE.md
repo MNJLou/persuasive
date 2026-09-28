@@ -14,7 +14,7 @@ E-commerce site for the "Persuasive" custom-embroidery shirt brand. Single-produ
 - `npm run dev` — Vite on `:3000`, UI only, but it **proxies `/api/*` to `:8787`**. Run `npm run dev:api` (`wrangler dev`) in a second terminal and you have the full stack with hot reload. Without it, API calls fail with a proxy error.
 - `npm run dev:cf` — `vite build && wrangler dev`: the production shape (Worker serving `dist/`) at `localhost:8787`. No hot reload.
 - `wrangler dev` uses a **local** D1 (`.wrangler/state`). Seed it once with `npm run d1:migrate:local`. Secrets come from `.dev.vars`.
-- `npm run deploy` — `vite build && wrangler deploy`. **This is the only way the site ships.** Workers Builds is NOT connected to the repo (deployments show `Source: Upload`), so pushing to git deploys nothing. If you connect it later, use build `npm run build`, deploy `npx wrangler deploy`.
+- `npm run deploy` — `vite build && wrangler deploy`. **This is the only way the site ships.** Workers Builds is NOT connected to the repo (deployments show `Source: Upload`), so pushing to git deploys nothing. If you connect it later, use build `npm run build`, deploy `npx wrangler deploy`. Wrangler prints **"No targets deployed"** — that is expected: `workers_dev` and preview URLs are off, and the Custom Domains live in the dashboard, not in `wrangler.jsonc`. Deploys leave them intact.
 - `node scripts/verify-schema.mjs` — applies the migrations to an in-memory SQLite (D1 is SQLite) and asserts the commission, idempotency, rollup and payout SQL. No network, no credentials. Run it after touching the schema or any query.
 - `npm run build` — `vite build`. Production build. **Transpiles only** — TypeScript is not installed, so SWC strips types and type errors do NOT fail the build.
 

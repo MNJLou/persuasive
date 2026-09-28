@@ -32,6 +32,9 @@
   // Every deployed version otherwise gets its own PUBLIC preview URL, all
   // sharing the production D1 — stale code able to write real orders/stock.
   "preview_urls": false,
+  // The shop lives on the Custom Domains (persuasive.online, www, admin.) set in
+  // the dashboard; don't also serve it at *.workers.dev.
+  "workers_dev": false,
   "observability": {
     "enabled": true
   }
