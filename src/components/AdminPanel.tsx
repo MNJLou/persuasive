@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { ArrowLeft, Plus, Minus } from 'lucide-react';
 import { toast } from 'sonner';
+import { adminFetch, clearAdminCredentials, storeAdminCredentials } from '../lib/adminApi';
 
 interface StockItem {
   color: string;
@@ -12,9 +13,11 @@ interface StockItem {
 
 interface AdminPanelProps {
   onBack: () => void;
+  /** Rendered inside AdminApp's tab shell, which supplies its own header. */
+  embedded?: boolean;
 }
 
-export function AdminPanel({ onBack }: AdminPanelProps) {
+export function AdminPanel({ onBack, embedded = false }: AdminPanelProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +44,7 @@ export function AdminPanel({ onBack }: AdminPanelProps) {
       });
 
       if (res.ok) {
-        sessionStorage.setItem('adminAuth', 'true');
+        storeAdminCredentials(password);
         setIsAuthenticated(true);
         loadStockData();
         toast.success('Logged in successfully');
@@ -69,9 +72,8 @@ export function AdminPanel({ onBack }: AdminPanelProps) {
 
   const updateStock = async (color: string, size: string, change: number) => {
     try {
-      const res = await fetch('/api/admin/stock', {
+      const res = await adminFetch('/api/admin/stock', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ color, size, change }),
       });
 
@@ -88,9 +90,8 @@ export function AdminPanel({ onBack }: AdminPanelProps) {
 
   const setStockAmount = async (color: string, size: string, amount: number) => {
     try {
-      const res = await fetch('/api/admin/stock', {
+      const res = await adminFetch('/api/admin/stock', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ color, size, stock: amount }),
       });
 
@@ -106,7 +107,7 @@ export function AdminPanel({ onBack }: AdminPanelProps) {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('adminAuth');
+    clearAdminCredentials();
     setIsAuthenticated(false);
     setPassword('');
   };
@@ -148,34 +149,32 @@ export function AdminPanel({ onBack }: AdminPanelProps) {
   }
 
   // Admin Dashboard
-  const colorCombinations = [
-    'White-Blue',
-    'Black-Pink',
-    'Black-Red',
-    'Cream-Red',
-    'Grey-Yellow',
-    'Mint Green-Teal',
-    'Pale Blue-Orange',
-  ];
+  // Driven by what the database actually holds. This list used to be hardcoded
+  // and had drifted out of step — it was missing both sleeveless colours.
+  const colorCombinations = Array.from(new Set(stockData.map((s) => s.color)));
   const sizes = ['Small', 'Medium', 'Large', 'XL', 'XXL'];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back to Home</span>
-          </button>
-          <Button onClick={handleLogout} variant="outline">
-            Logout
-          </Button>
-        </div>
+    <div className={embedded ? '' : 'min-h-screen bg-gray-50'}>
+      <div className={embedded ? '' : 'max-w-7xl mx-auto px-4 py-8'}>
+        {!embedded && (
+          <>
+            <div className="flex justify-between items-center mb-8">
+              <button
+                onClick={onBack}
+                className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back to Home</span>
+              </button>
+              <Button onClick={handleLogout} variant="outline">
+                Logout
+              </Button>
+            </div>
 
-        <h1 className="text-3xl font-bold mb-8">Stock Management</h1>
+            <h1 className="text-3xl font-bold mb-8">Stock Management</h1>
+          </>
+        )}
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="overflow-x-auto">

@@ -154,4 +154,53 @@ export const cropTopColorways: CropTop[] = [
   },
 ];
 
+// ---------------- FEATURED SHIRTS (Delusional, Persuasive Angel) ----------------
+// Single-colourway graphic shirts, tee sizes, unlimited stock. `key` is the
+// cart colour, deliberately not a plain colour name so the stock decrement
+// (keyed colour-thread) can never match a regular tee's stock row.
+export interface FeaturedShirt {
+  id: 'delusional' | 'angel';
+  tabLabel: string;
+  productName: string;
+  key: string;
+  colorName: string;
+  value: string;
+  border?: boolean;
+  price: number;
+  print: ColorOption;
+  blurb: string;
+  features: string[];
+  images: string[];
+}
+
+export const featuredShirts: FeaturedShirt[] = [
+  {
+    id: 'delusional',
+    tabLabel: 'Delusional',
+    productName: 'Persuasive Delusional',
+    key: 'Delusional Black',
+    colorName: 'Black',
+    value: '#0c0c0c',
+    price: 499.0,
+    print: { name: 'Pale Blue', value: '#93C5FD' },
+    blurb: 'A cut-off black tee with a small stacked PER·SUA·SIVE print on the chest. Quiet on the front, loud in the attitude.',
+    features: ['Heavyweight cotton', 'Cut-off sleeves', 'Stacked PER·SUA·SIVE print', 'Relaxed fit', 'Machine washable'],
+    images: [1, 2, 3, 4].map((n) => `${CDN}/Persuasive%20Delusional/${n}.jpeg`),
+  },
+  {
+    id: 'angel',
+    tabLabel: 'Persuasive Angel',
+    productName: 'Persuasive Angel',
+    key: 'Angel White',
+    colorName: 'White',
+    value: '#FFFFFF',
+    border: true,
+    price: 599.0,
+    print: { name: 'Black', value: '#0c0c0c' },
+    blurb: 'An oversized white tee carrying a full-back cherub illustration, signed Johannesburg, South Africa.',
+    features: ['Heavyweight cotton', 'Oversized fit', 'Full-back cherub graphic', 'Johannesburg print', 'Machine washable'],
+    images: [1, 2, 3].map((n) => `${CDN}/Persuasive%20Angel/${n}.jpeg`),
+  },
+];
+
 export const BRAND_CITY = 'Johannesburg';

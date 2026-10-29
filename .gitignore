@@ -5,3 +5,8 @@ build
 .env.local
 .vercel
 .env*.local
+
+# Cloudflare
+.wrangler
+.dev.vars
+.dev.vars.*
