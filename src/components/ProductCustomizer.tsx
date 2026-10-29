@@ -18,6 +18,8 @@ import {
   CAP_PRICE,
   cropTopColorways,
   CROP_TOP_SIZES,
+  featuredShirts,
+  FeaturedShirt,
   SIZE_GUIDE,
   type ColorOption,
 } from './persuasive/data';
@@ -357,9 +359,70 @@ function CropTopCustomizer({ onAdd }: { onAdd: (i: CartItem) => void }) {
   );
 }
 
+// ---------- FEATURED shirt customizer (Delusional / Angel) ----------
+function FeaturedShirtCustomizer({ shirt, onAdd }: { shirt: FeaturedShirt; onAdd: (i: CartItem) => void }) {
+  const [size, setSize] = useState('Medium');
+  const add = () => {
+    onAdd({
+      id: '',
+      shirtColor: shirt.key,
+      embroideryColor: shirt.print.name,
+      size,
+      price: shirt.price,
+      image: shirt.images[0],
+      productType: 'featured',
+      productName: shirt.productName,
+      swatch: shirt.value,
+      embSwatch: shirt.print.value,
+    });
+    toast.success('Added to cart!', { description: `${shirt.productName} · ${shirt.colorName} · ${size}` });
+  };
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.05fr) minmax(0,0.95fr)', gap: 'clamp(28px,4vw,64px)', alignItems: 'start' }} className="cust-grid">
+      <Gallery images={shirt.images} bg="var(--paper-2)" />
+
+      <div className="stack" style={{ gap: 0 }}>
+        <div className="spread" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <div className="mono dim" style={{ marginBottom: 12 }}>Apparel — New</div>
+            <h1 className="display" style={{ fontSize: 'clamp(32px,4.4vw,56px)' }}>{shirt.productName}</h1>
+          </div>
+          <div className="display" style={{ fontSize: 34, whiteSpace: 'nowrap' }}>R{shirt.price.toFixed(0)}</div>
+        </div>
+
+        <div className="tag" style={{ alignSelf: 'flex-start', marginTop: 18, borderColor: 'var(--ink)' }}><Icon.Truck size={14} /> Buy 2 — Free shipping</div>
+
+        <p style={{ color: 'var(--muted)', fontSize: 15, marginTop: 22, maxWidth: 460 }}>{shirt.blurb}</p>
+
+        <hr className="rule" style={{ margin: '30px 0' }} />
+
+        <label className="field-label">Colour — <span style={{ color: 'var(--ink)' }}>{shirt.colorName}</span></label>
+        <div className="row" style={{ gap: 12, alignItems: 'center', marginBottom: 28 }}>
+          <span className="swatch" data-active="true" style={{ background: shirt.value, cursor: 'default' }}></span>
+          <span className="mono dim">Only colourway</span>
+        </div>
+
+        <label className="field-label" style={{ marginBottom: 10 }}>Size — <span style={{ color: 'var(--ink)' }}>{size}</span></label>
+        <div className="row" style={{ gap: 8, flexWrap: 'wrap', marginBottom: 32 }}>
+          {TEE_SIZES.map((s) => (
+            <button key={s} onClick={() => setSize(s)}
+              style={{ minWidth: 54, padding: '13px 14px', border: '1px solid var(--ink)', background: size === s ? 'var(--ink)' : 'transparent', color: size === s ? '#fff' : 'var(--ink)', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em' }}>
+              {s}
+            </button>
+          ))}
+        </div>
+
+        <button className="btn btn-block btn-lg" onClick={add}>Add to cart — R{shirt.price.toFixed(0)} <Icon.Arrow className="arrow" /></button>
+
+        <FeatureList items={shirt.features} />
+      </div>
+    </div>
+  );
+}
+
 // ---------- Wrapper with product switcher ----------
 export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
-  const [tab, setTab] = useState<'tee' | 'cap' | 'croptop'>('tee');
+  const [tab, setTab] = useState<string>('tee');
   const [stock, setStock] = useState<StockRow[]>([]);
 
   useEffect(() => {
@@ -392,12 +455,18 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
           <button className="prodtab" data-active={tab === 'croptop'} onClick={() => setTab('croptop')}>
             <span className="mono">Crop Top</span><span className="mono-sm" style={{ color: 'var(--accent)' }}>New · From R400</span>
           </button>
+          {featuredShirts.map((f) => (
+            <button key={f.id} className="prodtab" data-active={tab === f.id} onClick={() => setTab(f.id)}>
+              <span className="mono">{f.tabLabel}</span><span className="mono-sm" style={{ color: 'var(--accent)' }}>New · R{f.price.toFixed(0)}</span>
+            </button>
+          ))}
         </div>
       </div>
       <div className="wrap section" style={{ paddingTop: 'clamp(36px,5vw,64px)', paddingBottom: 'clamp(48px,7vw,96px)' }}>
         {tab === 'tee' && <TeeCustomizer onAdd={onAddToCart} stock={stock} />}
         {tab === 'cap' && <CapCustomizer onAdd={onAddToCart} />}
         {tab === 'croptop' && <CropTopCustomizer onAdd={onAddToCart} />}
+        {featuredShirts.filter((f) => f.id === tab).map((f) => <FeaturedShirtCustomizer key={f.id} shirt={f} onAdd={onAddToCart} />)}
       </div>
     </div>
   );

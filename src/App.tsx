@@ -20,7 +20,7 @@ export interface CartItem {
   price: number;
   image: string;
   // Display extras (optional — backend ignores these; shirtColor/embroideryColor/size remain the contract)
-  productType?: 'tee' | 'cap' | 'croptop';
+  productType?: 'tee' | 'cap' | 'croptop' | 'featured';
   productName?: string;
   swatch?: string;
   embSwatch?: string;
