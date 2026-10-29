@@ -231,6 +231,9 @@ html[data-head="anton"] {
 .prodtab[data-active="true"] { border-bottom-color: var(--ink); }
 .prodtab[data-active="false"] { opacity:.5; }
 .prodtab:hover { opacity:1; }
+.prodtabs { overflow-x:auto; overflow-y:hidden; scrollbar-width:none; }
+.prodtabs::-webkit-scrollbar { display:none; }
+.prodtab { flex:0 0 auto; white-space:nowrap; }
 
 /* admin orders table */
 .adminrow { display:grid; grid-template-columns:1.1fr 2fr 0.6fr 0.8fr 1fr; gap:16px; align-items:center; padding:16px 20px; }
@@ -264,6 +267,8 @@ html[data-head="anton"] {
   .psv-nav { gap: 18px !important; }
   /* larger tap targets for swatches/sizes already 46px; keep */
   .prodtab { padding: 0 16px; }
+  /* soft fade on the right edge hints that the strip scrolls */
+  .prodtabs { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
   .adminrow { grid-template-columns: 1fr 1fr; }
 }
 
