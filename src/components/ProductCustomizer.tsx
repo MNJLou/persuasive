@@ -3,7 +3,7 @@
 // Backend preserved: stock loaded from /api/admin/stock, cart contract
 // stays { shirtColor, embroideryColor, size, price, image } (+ display extras).
 // ============================================================
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { CartItem } from '../App';
 import { Icon } from './persuasive/ui';
@@ -422,7 +422,13 @@ function FeaturedShirtCustomizer({ shirt, onAdd }: { shirt: FeaturedShirt; onAdd
 
 // ---------- Wrapper with product switcher ----------
 export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
-  const [tab, setTab] = useState<string>('tee');
+  const [tab, setTab] = useState<string>(featuredShirts[0].id);
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  // Keep the selected tab visible when the strip is scrolled on small screens.
+  useEffect(() => {
+    tabsRef.current?.querySelector('[data-active="true"]')?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+  }, [tab]);
   const [stock, setStock] = useState<StockRow[]>([]);
 
   useEffect(() => {
@@ -445,7 +451,12 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
   return (
     <div className="psv">
       <div style={{ borderBottom: '1px solid var(--line)', background: 'var(--paper)', position: 'sticky', top: 70, zIndex: 30 }}>
-        <div className="wrap row" style={{ gap: 0, height: 56 }}>
+        <div className="wrap row prodtabs" ref={tabsRef} style={{ gap: 0, height: 56 }}>
+          {featuredShirts.map((f) => (
+            <button key={f.id} className="prodtab" data-active={tab === f.id} onClick={() => setTab(f.id)}>
+              <span className="mono">{f.tabLabel}</span><span className="mono-sm" style={{ color: 'var(--accent)' }}>New · R{f.price.toFixed(0)}</span>
+            </button>
+          ))}
           <button className="prodtab" data-active={tab === 'tee'} onClick={() => setTab('tee')}>
             <span className="mono">Cotton Tee</span><span className="mono-sm dim">R550</span>
           </button>
@@ -455,11 +466,6 @@ export function ProductCustomizer({ onAddToCart }: ProductCustomizerProps) {
           <button className="prodtab" data-active={tab === 'croptop'} onClick={() => setTab('croptop')}>
             <span className="mono">Crop Top</span><span className="mono-sm" style={{ color: 'var(--accent)' }}>New · From R400</span>
           </button>
-          {featuredShirts.map((f) => (
-            <button key={f.id} className="prodtab" data-active={tab === f.id} onClick={() => setTab(f.id)}>
-              <span className="mono">{f.tabLabel}</span><span className="mono-sm" style={{ color: 'var(--accent)' }}>New · R{f.price.toFixed(0)}</span>
-            </button>
-          ))}
         </div>
       </div>
       <div className="wrap section" style={{ paddingTop: 'clamp(36px,5vw,64px)', paddingBottom: 'clamp(48px,7vw,96px)' }}>
